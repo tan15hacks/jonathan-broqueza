@@ -196,6 +196,56 @@ select:focus-visible {
   display: block;
 }
 
+#about .glass-card:first-child::before {
+  content: "";
+  display: block;
+  width: 100%;
+  min-height: 360px;
+  margin-bottom: 1.75rem;
+  border-radius: 1.55rem;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background:
+    linear-gradient(180deg, transparent 55%, rgba(5, 7, 13, 0.52)),
+    url("/profile-photo.svg") center 36% / cover no-repeat;
+  box-shadow:
+    0 28px 80px rgba(34, 211, 238, 0.1),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+#about .glass-card:first-child::after {
+  content: "BSCS Graduate • Web Developer";
+  display: inline-flex;
+  width: fit-content;
+  margin-top: -4.2rem;
+  margin-bottom: 2.1rem;
+  margin-left: 1rem;
+  position: relative;
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: 999px;
+  background: rgba(5, 7, 13, 0.68);
+  backdrop-filter: blur(14px);
+  color: #cffafe;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  line-height: 1;
+  padding: 0.85rem 1rem;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  #about .glass-card:first-child::before {
+    min-height: 280px;
+    background-position: center 30%;
+  }
+
+  #about .glass-card:first-child::after {
+    margin-left: 0.75rem;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+  }
+}
+
 .scrollbar-none {
   scrollbar-width: none;
 }
