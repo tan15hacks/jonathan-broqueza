@@ -196,23 +196,6 @@ select:focus-visible {
   display: block;
 }
 
-.dock-shell {
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  background: rgba(255, 255, 255, 0.86);
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.28);
-  backdrop-filter: blur(22px);
-}
-
-.dock-icon {
-  color: #111827 !important;
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(17, 24, 39, 0.12);
-}
-
-.dock-icon svg {
-  stroke: currentColor !important;
-}
-
 .scrollbar-none {
   scrollbar-width: none;
 }
