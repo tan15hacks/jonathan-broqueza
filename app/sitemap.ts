@@ -8,11 +8,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
-    {
-      url: "https://jonathan-broqueza.vercel.app/admin",
-      lastModified: new Date(),
-      changeFrequency: "monthly",
-      priority: 0.2,
-    },
   ];
 }
