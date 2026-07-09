@@ -12,13 +12,13 @@ import {
   Database,
   ExternalLink,
   FolderKanban,
-  Github,
   GraduationCap,
   Mail,
   MapPin,
   Menu,
   MonitorPlay,
   MonitorSmartphone,
+  Phone,
   Rocket,
   Settings2,
   ShieldCheck,
@@ -29,6 +29,9 @@ import { useEffect, useState } from "react";
 import { initialProjects, type Project } from "@/lib/projects";
 
 const navItems = ["Projects", "Services", "Process", "About", "Contact"];
+const contactEmail = "thanbroq896@gmail.com";
+const phoneNumber = "09456821503";
+const facebookUrl = "https://www.facebook.com/jonathan.broqueza.75/";
 
 const services = [
   {
@@ -78,7 +81,7 @@ const footerLinks = [
   { label: "Services", href: "#services" },
   { label: "Process", href: "#process" },
   { label: "About", href: "#about" },
-  { label: "Admin", href: "/admin" },
+  { label: "Contact", href: "#contact" },
 ];
 
 const fadeUp = {
@@ -250,9 +253,6 @@ export default function Home() {
               <p className="text-sm font-black uppercase tracking-[0.3em] text-cyan-300">Selected Work</p>
               <h2 className="font-display mt-4 max-w-4xl text-5xl font-bold leading-none tracking-[-0.055em] sm:text-6xl">Projects built across brands, systems, and digital products.</h2>
             </div>
-            <a href="/admin" className="inline-flex w-fit items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-5 py-3 text-sm font-bold text-slate-200 hover:bg-white/[0.08]">
-              Open Admin <Settings2 size={16} />
-            </a>
           </motion.div>
 
           <div className="mb-8 flex flex-wrap gap-3">
@@ -379,7 +379,7 @@ export default function Home() {
             <p className="text-sm font-black uppercase tracking-[0.3em] text-cyan-700">Start a project</p>
             <h2 className="font-display mt-4 text-5xl font-bold leading-none tracking-[-0.055em] sm:text-6xl">Tell me what you want to build.</h2>
             <p className="mt-6 text-lg font-medium leading-8 text-slate-600">Whether it is a landing page, booking system, management system, portfolio, or full-stack website, the build starts with your goal and required features.</p>
-            <a href="mailto:heyhey282928@gmail.com" className="btn-dark mt-8 inline-flex items-center gap-2 rounded-full px-6 py-4 text-sm hover:-translate-y-1">
+            <a href={`mailto:${contactEmail}`} className="btn-dark mt-8 inline-flex items-center gap-2 rounded-full px-6 py-4 text-sm hover:-translate-y-1">
               <span>Send Email</span> <Mail size={17} />
             </a>
           </div>
@@ -407,9 +407,9 @@ export default function Home() {
             </div>
             <p className="mt-5 text-sm font-medium leading-7 text-slate-400">Designing and building responsive websites, booking systems, management systems, portfolios, and full-stack web projects based on client needs.</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="mailto:heyhey282928@gmail.com" className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.05] text-slate-200 hover:bg-cyan-300/10 hover:text-cyan-200" aria-label="Email Jonathan"><Mail size={18} /></a>
-              <a href="https://github.com/tan15hacks" target="_blank" rel="noreferrer" className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.05] text-slate-200 hover:bg-cyan-300/10 hover:text-cyan-200" aria-label="GitHub profile"><Github size={18} /></a>
-              <a href="/admin" className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.05] text-slate-200 hover:bg-cyan-300/10 hover:text-cyan-200" aria-label="Portfolio admin"><Settings2 size={18} /></a>
+              <a href={`mailto:${contactEmail}`} className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.05] text-slate-200 hover:bg-cyan-300/10 hover:text-cyan-200" aria-label="Email Jonathan"><Mail size={18} /></a>
+              <a href={facebookUrl} target="_blank" rel="noreferrer" className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.05] text-lg font-black text-slate-200 hover:bg-cyan-300/10 hover:text-cyan-200" aria-label="Facebook profile">f</a>
+              <a href={`tel:${phoneNumber}`} className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.05] text-slate-200 hover:bg-cyan-300/10 hover:text-cyan-200" aria-label="Call Jonathan"><Phone size={18} /></a>
             </div>
           </div>
 
@@ -432,7 +432,8 @@ export default function Home() {
             <div className="mt-5 space-y-4 text-sm font-semibold text-slate-400">
               <div className="flex gap-3"><GraduationCap size={18} className="shrink-0 text-cyan-300" /> BSCS Graduate, Bicol University Polangui</div>
               <div className="flex gap-3"><MapPin size={18} className="shrink-0 text-cyan-300" /> Bicol, Philippines</div>
-              <a href="mailto:heyhey282928@gmail.com" className="flex gap-3 hover:text-cyan-200"><Mail size={18} className="shrink-0 text-cyan-300" /> heyhey282928@gmail.com</a>
+              <a href={`mailto:${contactEmail}`} className="flex gap-3 hover:text-cyan-200"><Mail size={18} className="shrink-0 text-cyan-300" /> {contactEmail}</a>
+              <a href={`tel:${phoneNumber}`} className="flex gap-3 hover:text-cyan-200"><Phone size={18} className="shrink-0 text-cyan-300" /> {phoneNumber}</a>
             </div>
           </div>
         </div>
