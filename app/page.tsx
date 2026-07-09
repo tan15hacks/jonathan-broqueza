@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   ArrowRight,
   BadgeCheck,
@@ -167,6 +167,87 @@ function ProjectPreview({ project }: { project: Project }) {
   );
 }
 
+function ProjectCard({ project, index }: { project: Project; index: number }) {
+  return (
+    <motion.article
+      layout="position"
+      initial={{ opacity: 0, y: 28, scale: 0.96, filter: "blur(10px)" }}
+      animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      exit={{ opacity: 0, y: -18, scale: 0.96, filter: "blur(10px)" }}
+      transition={{
+        duration: 0.48,
+        delay: Math.min(index * 0.045, 0.2),
+        ease: smoothEase,
+        layout: { duration: 0.45, ease: smoothEase },
+      }}
+      whileHover={{ y: -10, scale: 1.01 }}
+      key={project.id}
+      className="glass-card group flex min-h-[610px] flex-col rounded-[2rem] p-5"
+    >
+      <ProjectPreview project={project} />
+      <div className="flex flex-1 flex-col px-1 pb-1">
+        <div className="mb-5 flex items-start justify-between gap-5">
+          <motion.div whileHover={{ rotate: -6, scale: 1.08 }} className="grid h-12 w-12 place-items-center rounded-2xl" style={{ backgroundColor: `${project.accent}22`, color: project.accent }}>
+            <FolderKanban size={22} />
+          </motion.div>
+          <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-slate-300">{project.status}</span>
+        </div>
+        <p className="text-xs font-black uppercase tracking-[0.22em]" style={{ color: project.accent }}>{project.type}</p>
+        <h3 className="font-display mt-4 text-3xl font-bold leading-tight tracking-[-0.04em] text-white">{project.title}</h3>
+        <p className="mt-2 text-sm font-semibold text-slate-500">{project.industry}</p>
+        <p className="mt-5 text-sm font-medium leading-7 text-slate-300">{project.description}</p>
+        <div className="mt-6 flex flex-wrap gap-2">
+          {project.highlights.slice(0, 4).map((item) => (
+            <motion.span whileHover={{ y: -2 }} key={item} className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs font-semibold text-slate-300">{item}</motion.span>
+          ))}
+        </div>
+        <div className="mt-auto pt-7">
+          <div className="mb-5 flex flex-wrap gap-2">
+            {project.tools.slice(0, 4).map((tool) => (
+              <span key={tool} className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">{tool}</span>
+            ))}
+          </div>
+          {project.liveUrl ? (
+            <motion.a href={project.liveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-black text-white group-hover:text-cyan-200" whileHover={{ x: 4 }}>
+              View live project <ExternalLink size={15} />
+            </motion.a>
+          ) : (
+            <span className="inline-flex items-center gap-2 text-sm font-black text-slate-500">Project details available on request</span>
+          )}
+        </div>
+      </div>
+    </motion.article>
+  );
+}
+
+function NavItem({ item }: { item: string }) {
+  return (
+    <motion.a
+      href={`#${item.toLowerCase()}`}
+      className="group relative px-1 py-2 text-sm font-semibold text-slate-300 hover:text-white"
+      initial="rest"
+      animate="rest"
+      whileHover="hover"
+      whileTap={{ scale: 0.97 }}
+      variants={{ rest: { y: 0 }, hover: { y: -2 } }}
+      transition={{ duration: 0.28, ease: smoothEase }}
+    >
+      <span className="relative z-10">{item}</span>
+      <motion.span
+        className="absolute -bottom-1 left-0 right-0 h-[2px] rounded-full bg-gradient-to-r from-cyan-300 to-violet-400"
+        variants={{ rest: { scaleX: 0, opacity: 0 }, hover: { scaleX: 1, opacity: 1 } }}
+        transition={{ duration: 0.35, ease: smoothEase }}
+        style={{ transformOrigin: "center" }}
+      />
+      <motion.span
+        className="absolute inset-x-[-0.55rem] inset-y-0 -z-0 rounded-full bg-white/[0.035]"
+        variants={{ rest: { opacity: 0, scale: 0.9 }, hover: { opacity: 1, scale: 1 } }}
+        transition={{ duration: 0.32, ease: smoothEase }}
+      />
+    </motion.a>
+  );
+}
+
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [projects, setProjects] = useState<Project[]>(initialProjects);
@@ -217,15 +298,7 @@ export default function Home() {
 
           <div className="hidden items-center gap-7 lg:flex">
             {navItems.map((item) => (
-              <motion.a
-                key={item}
-                href={`#${item.toLowerCase()}`}
-                className="nav-link text-sm font-semibold text-slate-300 hover:text-white"
-                whileHover={{ y: -2 }}
-                transition={{ duration: 0.2 }}
-              >
-                {item}
-              </motion.a>
+              <NavItem key={item} item={item} />
             ))}
           </div>
 
@@ -363,50 +436,12 @@ export default function Home() {
             ))}
           </motion.div>
 
-          <motion.div layout variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true, margin: "-80px" }} className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-            {filteredProjects.map((project) => (
-              <motion.article
-                layout
-                variants={cardMotion}
-                whileHover={{ y: -10, scale: 1.01 }}
-                transition={{ layout: { duration: 0.35, ease: smoothEase }, duration: 0.35, ease: smoothEase }}
-                key={project.id}
-                className="glass-card group flex min-h-[610px] flex-col rounded-[2rem] p-5"
-              >
-                <ProjectPreview project={project} />
-                <div className="flex flex-1 flex-col px-1 pb-1">
-                  <div className="mb-5 flex items-start justify-between gap-5">
-                    <motion.div whileHover={{ rotate: -6, scale: 1.08 }} className="grid h-12 w-12 place-items-center rounded-2xl" style={{ backgroundColor: `${project.accent}22`, color: project.accent }}>
-                      <FolderKanban size={22} />
-                    </motion.div>
-                    <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-slate-300">{project.status}</span>
-                  </div>
-                  <p className="text-xs font-black uppercase tracking-[0.22em]" style={{ color: project.accent }}>{project.type}</p>
-                  <h3 className="font-display mt-4 text-3xl font-bold leading-tight tracking-[-0.04em] text-white">{project.title}</h3>
-                  <p className="mt-2 text-sm font-semibold text-slate-500">{project.industry}</p>
-                  <p className="mt-5 text-sm font-medium leading-7 text-slate-300">{project.description}</p>
-                  <div className="mt-6 flex flex-wrap gap-2">
-                    {project.highlights.slice(0, 4).map((item) => (
-                      <motion.span whileHover={{ y: -2 }} key={item} className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs font-semibold text-slate-300">{item}</motion.span>
-                    ))}
-                  </div>
-                  <div className="mt-auto pt-7">
-                    <div className="mb-5 flex flex-wrap gap-2">
-                      {project.tools.slice(0, 4).map((tool) => (
-                        <span key={tool} className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">{tool}</span>
-                      ))}
-                    </div>
-                    {project.liveUrl ? (
-                      <motion.a href={project.liveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-black text-white group-hover:text-cyan-200" whileHover={{ x: 4 }}>
-                        View live project <ExternalLink size={15} />
-                      </motion.a>
-                    ) : (
-                      <span className="inline-flex items-center gap-2 text-sm font-black text-slate-500">Project details available on request</span>
-                    )}
-                  </div>
-                </div>
-              </motion.article>
-            ))}
+          <motion.div layout className="grid min-h-[650px] gap-5 md:grid-cols-2 xl:grid-cols-3">
+            <AnimatePresence mode="popLayout">
+              {filteredProjects.map((project, index) => (
+                <ProjectCard key={project.id} project={project} index={index} />
+              ))}
+            </AnimatePresence>
           </motion.div>
         </div>
       </section>
