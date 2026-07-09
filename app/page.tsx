@@ -518,6 +518,15 @@ export default function Home() {
               ))}
             </motion.div>
           </motion.div>
+
+          <motion.div {...fadeUp}>
+            <div className="mb-6 flex items-center gap-3 text-sm font-black uppercase tracking-[0.25em] text-slate-500"><Blocks size={16} /> Tools and technologies</div>
+            <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+              {stack.map((tool) => (
+                <motion.div variants={cardMotion} whileHover={{ y: -4, scale: 1.02 }} key={tool} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4 text-sm font-bold text-slate-200 hover:border-cyan-300/35 hover:bg-cyan-300/10">{tool}</motion.div>
+              ))}
+            </motion.div>
+          </motion.div>
         </div>
       </section>
 
