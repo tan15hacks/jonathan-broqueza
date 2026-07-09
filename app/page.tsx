@@ -13,9 +13,9 @@ import {
   ExternalLink,
   FolderKanban,
   Github,
-  House,
-  LayoutDashboard,
+  GraduationCap,
   Mail,
+  MapPin,
   Menu,
   MonitorPlay,
   MonitorSmartphone,
@@ -23,9 +23,6 @@ import {
   Settings2,
   ShieldCheck,
   Sparkles,
-  UserRound,
-  Workflow,
-  Wrench,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -76,15 +73,12 @@ const process = [
   ["05", "Launch", "Test, polish, deploy, and prepare the project for public use or client handoff."],
 ];
 
-const dockItems = [
-  { label: "Home", href: "#home", icon: House },
-  { label: "Projects", href: "#projects", icon: FolderKanban },
-  { label: "Services", href: "#services", icon: Wrench },
-  { label: "Process", href: "#process", icon: Workflow },
-  { label: "About", href: "#about", icon: UserRound },
-  { label: "Admin", href: "/admin", icon: LayoutDashboard },
-  { label: "GitHub", href: "https://github.com/tan15hacks", icon: Github, external: true },
-  { label: "Email", href: "mailto:heyhey282928@gmail.com", icon: Mail },
+const footerLinks = [
+  { label: "Projects", href: "#projects" },
+  { label: "Services", href: "#services" },
+  { label: "Process", href: "#process" },
+  { label: "About", href: "#about" },
+  { label: "Admin", href: "/admin" },
 ];
 
 const fadeUp = {
@@ -121,35 +115,6 @@ function ProjectPreview({ project }: { project: Project }) {
   );
 }
 
-function MacDock() {
-  return (
-    <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.55 }} className="fixed bottom-5 left-1/2 z-50 w-[calc(100%-1.25rem)] max-w-max -translate-x-1/2">
-      <div className="dock-shell flex items-end gap-2 overflow-x-auto rounded-[2rem] px-3 py-2 scrollbar-none">
-        {dockItems.map((item) => {
-          const Icon = item.icon;
-          return (
-            <motion.a
-              key={item.label}
-              href={item.href}
-              target={item.external ? "_blank" : undefined}
-              rel={item.external ? "noreferrer" : undefined}
-              whileHover={{ y: -8, scale: 1.13 }}
-              whileTap={{ scale: 0.96 }}
-              className="dock-icon group relative grid h-12 w-12 shrink-0 place-items-center rounded-2xl shadow-sm sm:h-14 sm:w-14"
-              aria-label={item.label}
-            >
-              <Icon size={22} />
-              <span className="pointer-events-none absolute -top-10 scale-90 rounded-full bg-[#05070d] px-3 py-1 text-xs font-bold text-white opacity-0 shadow-xl transition group-hover:scale-100 group-hover:opacity-100">
-                {item.label}
-              </span>
-            </motion.a>
-          );
-        })}
-      </div>
-    </motion.div>
-  );
-}
-
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [projects, setProjects] = useState<Project[]>(initialProjects);
@@ -172,7 +137,7 @@ export default function Home() {
   const filteredProjects = activeFilter === "All" ? projects : projects.filter((project) => project.type === activeFilter);
 
   return (
-    <main className="min-h-screen overflow-hidden pb-32 text-white">
+    <main className="min-h-screen overflow-hidden text-white">
       <motion.div style={{ scaleX }} className="fixed left-0 top-0 z-[60] h-1 w-full origin-left bg-gradient-to-r from-cyan-300 via-violet-400 to-emerald-300" />
 
       <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[#05070d]/78 backdrop-blur-2xl">
@@ -429,7 +394,54 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <MacDock />
+      <footer className="relative border-t border-white/10 px-5 py-14 lg:px-8">
+        <div className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-cyan-300/70 to-transparent" />
+        <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1.1fr_0.8fr_0.8fr_0.9fr]">
+          <div className="glass-card rounded-[2rem] p-6">
+            <div className="flex items-center gap-3">
+              <span className="grid h-12 w-12 place-items-center rounded-2xl bg-white text-[#05070d]"><Code2 size={21} /></span>
+              <div>
+                <h3 className="font-display text-2xl font-bold tracking-[-0.04em]">Jonathan Broqueza</h3>
+                <p className="text-xs font-black uppercase tracking-[0.24em] text-cyan-300">Web Developer</p>
+              </div>
+            </div>
+            <p className="mt-5 text-sm font-medium leading-7 text-slate-400">Designing and building responsive websites, booking systems, management systems, portfolios, and full-stack web projects based on client needs.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <a href="mailto:heyhey282928@gmail.com" className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.05] text-slate-200 hover:bg-cyan-300/10 hover:text-cyan-200" aria-label="Email Jonathan"><Mail size={18} /></a>
+              <a href="https://github.com/tan15hacks" target="_blank" rel="noreferrer" className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.05] text-slate-200 hover:bg-cyan-300/10 hover:text-cyan-200" aria-label="GitHub profile"><Github size={18} /></a>
+              <a href="/admin" className="grid h-11 w-11 place-items-center rounded-2xl border border-white/10 bg-white/[0.05] text-slate-200 hover:bg-cyan-300/10 hover:text-cyan-200" aria-label="Portfolio admin"><Settings2 size={18} /></a>
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.035] p-6">
+            <h4 className="text-sm font-black uppercase tracking-[0.24em] text-white">Services</h4>
+            <div className="mt-5 grid gap-3 text-sm font-semibold text-slate-400">
+              {services.slice(0, 6).map((service) => <a key={service.title} href="#services" className="hover:text-cyan-200">{service.title}</a>)}
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.035] p-6">
+            <h4 className="text-sm font-black uppercase tracking-[0.24em] text-white">Navigate</h4>
+            <div className="mt-5 grid gap-3 text-sm font-semibold text-slate-400">
+              {footerLinks.map((link) => <a key={link.label} href={link.href} className="hover:text-cyan-200">{link.label}</a>)}
+            </div>
+          </div>
+
+          <div className="rounded-[2rem] border border-white/10 bg-white/[0.035] p-6">
+            <h4 className="text-sm font-black uppercase tracking-[0.24em] text-white">Details</h4>
+            <div className="mt-5 space-y-4 text-sm font-semibold text-slate-400">
+              <div className="flex gap-3"><GraduationCap size={18} className="shrink-0 text-cyan-300" /> BSCS Graduate, Bicol University Polangui</div>
+              <div className="flex gap-3"><MapPin size={18} className="shrink-0 text-cyan-300" /> Bicol, Philippines</div>
+              <a href="mailto:heyhey282928@gmail.com" className="flex gap-3 hover:text-cyan-200"><Mail size={18} className="shrink-0 text-cyan-300" /> heyhey282928@gmail.com</a>
+            </div>
+          </div>
+        </div>
+
+        <div className="mx-auto mt-8 flex max-w-7xl flex-col justify-between gap-3 border-t border-white/10 pt-6 text-sm font-semibold text-slate-500 md:flex-row md:items-center">
+          <p>© 2026 Jonathan Broqueza. Built with Next.js, Tailwind CSS, and Framer Motion.</p>
+          <p>Custom digital builds for brands, businesses, creators, and organizations.</p>
+        </div>
+      </footer>
     </main>
   );
 }
