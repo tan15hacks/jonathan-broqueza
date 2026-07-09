@@ -487,22 +487,34 @@ export default function Home() {
 
       <section id="about" className="bg-white/[0.035] px-5 py-24 lg:px-8">
         <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.85fr_1.15fr] lg:items-center">
-          <motion.div {...fadeUp} whileHover={{ y: -6 }} className="glass-card rounded-[2rem] p-8 lg:p-10">
-            <p className="text-sm font-black uppercase tracking-[0.3em] text-cyan-300">About</p>
-            <h2 className="font-display mt-4 text-5xl font-bold leading-none tracking-[-0.055em] sm:text-6xl">Jonathan Broqueza</h2>
-            <p className="mt-6 text-lg font-medium leading-8 text-slate-300">BSCS graduate from Bicol University Polangui, focused on building useful digital experiences for businesses, organizations, creators, and online projects.</p>
+          <motion.div {...fadeUp} whileHover={{ y: -6 }} className="glass-card rounded-[2rem] p-6 lg:p-8">
+            <div className="overflow-hidden rounded-[1.6rem] border border-white/10 bg-white/[0.04]">
+              <img
+                src="/profile-photo.png"
+                alt="Jonathan Broqueza portrait"
+                className="h-[340px] w-full object-cover object-top transition duration-700 hover:scale-[1.03]"
+              />
+            </div>
+
+            <div className="mt-5 inline-flex rounded-full border border-cyan-400/30 bg-cyan-400/10 px-4 py-2 text-[0.68rem] font-black uppercase tracking-[0.18em] text-cyan-300">
+              BSCS Graduate • Web Developer
+            </div>
+
+            <p className="mt-5 text-sm font-black uppercase tracking-[0.3em] text-cyan-300">About</p>
+
+            <h2 className="font-display mt-4 text-5xl font-bold leading-none tracking-[-0.055em] sm:text-6xl">
+              Jonathan Broqueza
+            </h2>
+
+            <p className="mt-6 text-lg font-medium leading-8 text-slate-300">
+              BSCS graduate from Bicol University Polangui, focused on building useful digital experiences for businesses, organizations, creators, and online projects.
+            </p>
+
             <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true }} className="mt-8 grid gap-3 sm:grid-cols-2">
               {["Responsive interfaces", "Custom project design", "Admin dashboard thinking", "Frontend and full-stack builds"].map((item) => (
-                <motion.div variants={revealItem} whileHover={{ x: 4 }} key={item} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-bold text-slate-200"><BadgeCheck size={16} className="text-cyan-200" /> {item}</motion.div>
-              ))}
-            </motion.div>
-          </motion.div>
-
-          <motion.div {...fadeUp}>
-            <div className="mb-6 flex items-center gap-3 text-sm font-black uppercase tracking-[0.25em] text-slate-500"><Blocks size={16} /> Tools and technologies</div>
-            <motion.div variants={staggerContainer} initial="hidden" whileInView="show" viewport={{ once: true }} className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {stack.map((tool) => (
-                <motion.div variants={cardMotion} whileHover={{ y: -4, scale: 1.02 }} key={tool} className="rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-4 text-sm font-bold text-slate-200 hover:border-cyan-300/35 hover:bg-cyan-300/10">{tool}</motion.div>
+                <motion.div variants={revealItem} whileHover={{ x: 4 }} key={item} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-bold text-slate-200">
+                  <BadgeCheck size={16} className="text-cyan-200" /> {item}
+                </motion.div>
               ))}
             </motion.div>
           </motion.div>

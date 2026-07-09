@@ -196,62 +196,6 @@ select:focus-visible {
   display: block;
 }
 
-#about .glass-card:first-of-type {
-  position: relative;
-  overflow: hidden;
-  padding-top: 405px;
-  background:
-    linear-gradient(180deg, transparent 12%, rgba(5, 7, 13, 0.92) 52%),
-    linear-gradient(180deg, transparent 55%, rgba(5, 7, 13, 0.56)),
-    url("/profile-photo.svg") top 1.5rem center / calc(100% - 3rem) 360px no-repeat,
-    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035)),
-    rgba(5, 7, 13, 0.74);
-}
-
-#about .glass-card:first-of-type > p:first-of-type::before {
-  content: "BSCS Graduate • Web Developer";
-  display: inline-flex;
-  width: fit-content;
-  border: 1px solid rgba(34, 211, 238, 0.28);
-  border-radius: 999px;
-  background: rgba(5, 7, 13, 0.72);
-  backdrop-filter: blur(14px);
-  color: #cffafe;
-  font-size: 0.72rem;
-  font-weight: 900;
-  letter-spacing: 0.16em;
-  line-height: 1;
-  margin-bottom: 1.2rem;
-  padding: 0.85rem 1rem;
-  text-transform: uppercase;
-}
-
-#about .glass-card:first-of-type:hover {
-  background:
-    linear-gradient(180deg, transparent 12%, rgba(5, 7, 13, 0.92) 52%),
-    linear-gradient(180deg, transparent 55%, rgba(5, 7, 13, 0.56)),
-    url("/profile-photo.svg") top 1.25rem center / calc(100% - 2.5rem) 370px no-repeat,
-    linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035)),
-    rgba(5, 7, 13, 0.74);
-}
-
-@media (max-width: 640px) {
-  #about .glass-card:first-of-type {
-    padding-top: 322px;
-    background:
-      linear-gradient(180deg, transparent 8%, rgba(5, 7, 13, 0.94) 52%),
-      linear-gradient(180deg, transparent 55%, rgba(5, 7, 13, 0.56)),
-      url("/profile-photo.svg") top 1rem center / calc(100% - 2rem) 280px no-repeat,
-      linear-gradient(145deg, rgba(255, 255, 255, 0.11), rgba(255, 255, 255, 0.035)),
-      rgba(5, 7, 13, 0.74);
-  }
-
-  #about .glass-card:first-of-type > p:first-of-type::before {
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-  }
-}
-
 .scrollbar-none {
   scrollbar-width: none;
 }
