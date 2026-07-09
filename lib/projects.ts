@@ -7,6 +7,9 @@ export type Project = {
   highlights: string[];
   tools: string[];
   liveUrl?: string;
+  mediaUrl?: string;
+  mediaType?: "image" | "video";
+  mediaName?: string;
   status: "Live" | "Concept" | "In Progress";
   accent: string;
 };
