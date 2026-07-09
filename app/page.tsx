@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { AnimatePresence, motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
 import {
   ArrowRight,
   BadgeCheck,
@@ -170,15 +170,12 @@ function ProjectPreview({ project }: { project: Project }) {
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   return (
     <motion.article
-      layout="position"
-      initial={{ opacity: 0, y: 28, scale: 0.96, filter: "blur(10px)" }}
+      initial={{ opacity: 0, y: 18, scale: 0.985, filter: "blur(8px)" }}
       animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
-      exit={{ opacity: 0, y: -18, scale: 0.96, filter: "blur(10px)" }}
       transition={{
-        duration: 0.48,
-        delay: Math.min(index * 0.045, 0.2),
+        duration: 0.32,
+        delay: Math.min(index * 0.025, 0.09),
         ease: smoothEase,
-        layout: { duration: 0.45, ease: smoothEase },
       }}
       whileHover={{ y: -10, scale: 1.01 }}
       key={project.id}
@@ -315,7 +312,6 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.32, ease: smoothEase }}
             className="border-t border-white/10 bg-[#070b14] px-5 py-5 lg:hidden"
           >
@@ -436,12 +432,10 @@ export default function Home() {
             ))}
           </motion.div>
 
-          <motion.div layout className="grid min-h-[650px] gap-5 md:grid-cols-2 xl:grid-cols-3">
-            <AnimatePresence mode="popLayout">
-              {filteredProjects.map((project, index) => (
-                <ProjectCard key={project.id} project={project} index={index} />
-              ))}
-            </AnimatePresence>
+          <motion.div key={activeFilter} className="grid min-h-[650px] gap-5 md:grid-cols-2 xl:grid-cols-3">
+            {filteredProjects.map((project, index) => (
+              <ProjectCard key={`${activeFilter}-${project.id}`} project={project} index={index} />
+            ))}
           </motion.div>
         </div>
       </section>
