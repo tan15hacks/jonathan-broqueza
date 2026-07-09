@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -7,19 +8,24 @@ import {
   Blocks,
   BriefcaseBusiness,
   CalendarCheck,
-  ChevronRight,
   Code2,
   Database,
   ExternalLink,
-  Layers3,
+  FolderKanban,
+  Github,
+  House,
+  LayoutDashboard,
   Mail,
   Menu,
+  MonitorPlay,
   MonitorSmartphone,
-  PenTool,
   Rocket,
   Settings2,
   ShieldCheck,
   Sparkles,
+  UserRound,
+  Workflow,
+  Wrench,
   X,
 } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -70,12 +76,79 @@ const process = [
   ["05", "Launch", "Test, polish, deploy, and prepare the project for public use or client handoff."],
 ];
 
+const dockItems = [
+  { label: "Home", href: "#home", icon: House },
+  { label: "Projects", href: "#projects", icon: FolderKanban },
+  { label: "Services", href: "#services", icon: Wrench },
+  { label: "Process", href: "#process", icon: Workflow },
+  { label: "About", href: "#about", icon: UserRound },
+  { label: "Admin", href: "/admin", icon: LayoutDashboard },
+  { label: "GitHub", href: "https://github.com/tan15hacks", icon: Github, external: true },
+  { label: "Email", href: "mailto:heyhey282928@gmail.com", icon: Mail },
+];
+
 const fadeUp = {
   initial: { opacity: 0, y: 26 },
   whileInView: { opacity: 1, y: 0 },
   viewport: { once: true, margin: "-90px" },
   transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] },
 };
+
+function ProjectPreview({ project }: { project: Project }) {
+  return (
+    <div className="media-frame mb-6 h-52">
+      {project.mediaUrl ? (
+        project.mediaType === "video" ? (
+          <video src={project.mediaUrl} className="project-media" controls muted playsInline preload="metadata" />
+        ) : (
+          <img src={project.mediaUrl} alt={`${project.title} preview`} className="project-media" loading="lazy" />
+        )
+      ) : (
+        <div className="grid h-full place-items-center px-6 text-center" style={{ background: `radial-gradient(circle at 30% 20%, ${project.accent}44, transparent 35%)` }}>
+          <div>
+            <div className="mx-auto grid h-16 w-16 place-items-center rounded-3xl border border-white/15 bg-white/10" style={{ color: project.accent }}>
+              <MonitorPlay size={28} />
+            </div>
+            <p className="mt-4 text-xs font-black uppercase tracking-[0.22em] text-white/70">Project Preview</p>
+            <p className="font-display mt-1 text-2xl font-bold tracking-[-0.04em] text-white">{project.title}</p>
+          </div>
+        </div>
+      )}
+      <div className="absolute bottom-4 left-4 z-10 rounded-full border border-white/15 bg-black/45 px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-white backdrop-blur-xl">
+        {project.mediaType === "video" ? "Video" : project.mediaType === "image" ? "Image" : project.type}
+      </div>
+    </div>
+  );
+}
+
+function MacDock() {
+  return (
+    <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.35, duration: 0.55 }} className="fixed bottom-5 left-1/2 z-50 w-[calc(100%-1.25rem)] max-w-max -translate-x-1/2">
+      <div className="dock-shell flex items-end gap-2 overflow-x-auto rounded-[2rem] px-3 py-2 scrollbar-none">
+        {dockItems.map((item) => {
+          const Icon = item.icon;
+          return (
+            <motion.a
+              key={item.label}
+              href={item.href}
+              target={item.external ? "_blank" : undefined}
+              rel={item.external ? "noreferrer" : undefined}
+              whileHover={{ y: -8, scale: 1.13 }}
+              whileTap={{ scale: 0.96 }}
+              className="dock-icon group relative grid h-12 w-12 shrink-0 place-items-center rounded-2xl shadow-sm sm:h-14 sm:w-14"
+              aria-label={item.label}
+            >
+              <Icon size={22} />
+              <span className="pointer-events-none absolute -top-10 scale-90 rounded-full bg-[#05070d] px-3 py-1 text-xs font-bold text-white opacity-0 shadow-xl transition group-hover:scale-100 group-hover:opacity-100">
+                {item.label}
+              </span>
+            </motion.a>
+          );
+        })}
+      </div>
+    </motion.div>
+  );
+}
 
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -99,7 +172,7 @@ export default function Home() {
   const filteredProjects = activeFilter === "All" ? projects : projects.filter((project) => project.type === activeFilter);
 
   return (
-    <main className="min-h-screen overflow-hidden text-white">
+    <main className="min-h-screen overflow-hidden pb-32 text-white">
       <motion.div style={{ scaleX }} className="fixed left-0 top-0 z-[60] h-1 w-full origin-left bg-gradient-to-r from-cyan-300 via-violet-400 to-emerald-300" />
 
       <header className="fixed left-0 right-0 top-0 z-50 border-b border-white/10 bg-[#05070d]/78 backdrop-blur-2xl">
@@ -122,8 +195,8 @@ export default function Home() {
             ))}
           </div>
 
-          <a href="#contact" className="hidden rounded-full bg-white px-5 py-3 text-sm font-black text-[#05070d] shadow-xl shadow-white/10 hover:-translate-y-0.5 hover:bg-cyan-100 lg:inline-flex">
-            Start a Project
+          <a href="#contact" className="btn-primary hidden items-center rounded-full px-5 py-3 text-sm shadow-xl lg:inline-flex">
+            <span>Start a Project</span>
           </a>
 
           <button onClick={() => setMenuOpen((value) => !value)} className="grid h-11 w-11 place-items-center rounded-full border border-white/15 bg-white/5 lg:hidden" aria-label="Open navigation menu">
@@ -160,8 +233,8 @@ export default function Home() {
               I’m Jonathan Broqueza, a BSCS graduate from Bicol University Polangui. I design and develop landing pages, booking systems, management systems, portfolios, and full-stack websites based on what each client needs.
             </p>
             <div className="mt-10 flex flex-col gap-4 sm:flex-row">
-              <a href="#projects" className="inline-flex items-center justify-center gap-2 rounded-full bg-white px-7 py-4 text-sm font-black text-[#05070d] shadow-2xl shadow-white/10 hover:-translate-y-1 hover:bg-cyan-100">
-                View Projects <ArrowRight size={17} />
+              <a href="#projects" className="btn-primary inline-flex items-center justify-center gap-2 rounded-full px-7 py-4 text-sm hover:-translate-y-1">
+                <span>View Projects</span> <ArrowRight size={17} />
               </a>
               <a href="#services" className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-7 py-4 text-sm font-black text-white hover:-translate-y-1 hover:bg-white/[0.08]">
                 Explore Services
@@ -225,37 +298,40 @@ export default function Home() {
             ))}
           </div>
 
-          <motion.div layout className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          <motion.div layout className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
             {filteredProjects.map((project) => (
-              <motion.article layout key={project.id} {...fadeUp} className="glass-card group flex min-h-[430px] flex-col rounded-[2rem] p-6">
-                <div className="mb-8 flex items-start justify-between gap-5">
-                  <div className="grid h-14 w-14 place-items-center rounded-2xl" style={{ backgroundColor: `${project.accent}22`, color: project.accent }}>
-                    <Layers3 size={24} />
+              <motion.article layout key={project.id} {...fadeUp} className="glass-card group flex min-h-[610px] flex-col rounded-[2rem] p-5">
+                <ProjectPreview project={project} />
+                <div className="flex flex-1 flex-col px-1 pb-1">
+                  <div className="mb-5 flex items-start justify-between gap-5">
+                    <div className="grid h-12 w-12 place-items-center rounded-2xl" style={{ backgroundColor: `${project.accent}22`, color: project.accent }}>
+                      <FolderKanban size={22} />
+                    </div>
+                    <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-slate-300">{project.status}</span>
                   </div>
-                  <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-xs font-black uppercase tracking-[0.16em] text-slate-300">{project.status}</span>
-                </div>
-                <p className="text-xs font-black uppercase tracking-[0.22em]" style={{ color: project.accent }}>{project.type}</p>
-                <h3 className="font-display mt-4 text-3xl font-bold leading-tight tracking-[-0.04em] text-white">{project.title}</h3>
-                <p className="mt-2 text-sm font-semibold text-slate-500">{project.industry}</p>
-                <p className="mt-5 text-sm font-medium leading-7 text-slate-300">{project.description}</p>
-                <div className="mt-6 flex flex-wrap gap-2">
-                  {project.highlights.slice(0, 4).map((item) => (
-                    <span key={item} className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs font-semibold text-slate-300">{item}</span>
-                  ))}
-                </div>
-                <div className="mt-auto pt-7">
-                  <div className="mb-5 flex flex-wrap gap-2">
-                    {project.tools.slice(0, 4).map((tool) => (
-                      <span key={tool} className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">{tool}</span>
+                  <p className="text-xs font-black uppercase tracking-[0.22em]" style={{ color: project.accent }}>{project.type}</p>
+                  <h3 className="font-display mt-4 text-3xl font-bold leading-tight tracking-[-0.04em] text-white">{project.title}</h3>
+                  <p className="mt-2 text-sm font-semibold text-slate-500">{project.industry}</p>
+                  <p className="mt-5 text-sm font-medium leading-7 text-slate-300">{project.description}</p>
+                  <div className="mt-6 flex flex-wrap gap-2">
+                    {project.highlights.slice(0, 4).map((item) => (
+                      <span key={item} className="rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-xs font-semibold text-slate-300">{item}</span>
                     ))}
                   </div>
-                  {project.liveUrl ? (
-                    <a href={project.liveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-black text-white group-hover:text-cyan-200">
-                      View live project <ExternalLink size={15} />
-                    </a>
-                  ) : (
-                    <span className="inline-flex items-center gap-2 text-sm font-black text-slate-500">Project details available on request</span>
-                  )}
+                  <div className="mt-auto pt-7">
+                    <div className="mb-5 flex flex-wrap gap-2">
+                      {project.tools.slice(0, 4).map((tool) => (
+                        <span key={tool} className="text-xs font-bold uppercase tracking-[0.16em] text-slate-500">{tool}</span>
+                      ))}
+                    </div>
+                    {project.liveUrl ? (
+                      <a href={project.liveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 text-sm font-black text-white group-hover:text-cyan-200">
+                        View live project <ExternalLink size={15} />
+                      </a>
+                    ) : (
+                      <span className="inline-flex items-center gap-2 text-sm font-black text-slate-500">Project details available on request</span>
+                    )}
+                  </div>
                 </div>
               </motion.article>
             ))}
@@ -315,12 +391,7 @@ export default function Home() {
             <h2 className="font-display mt-4 text-5xl font-bold leading-none tracking-[-0.055em] sm:text-6xl">Jonathan Broqueza</h2>
             <p className="mt-6 text-lg font-medium leading-8 text-slate-300">BSCS graduate from Bicol University Polangui, focused on building useful digital experiences for businesses, organizations, creators, and online projects.</p>
             <div className="mt-8 grid gap-3 sm:grid-cols-2">
-              {[
-                "Responsive interfaces",
-                "Custom project design",
-                "Admin dashboard thinking",
-                "Frontend and full-stack builds",
-              ].map((item) => (
+              {["Responsive interfaces", "Custom project design", "Admin dashboard thinking", "Frontend and full-stack builds"].map((item) => (
                 <div key={item} className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/[0.04] px-4 py-3 text-sm font-bold text-slate-200"><BadgeCheck size={16} className="text-cyan-200" /> {item}</div>
               ))}
             </div>
@@ -343,8 +414,8 @@ export default function Home() {
             <p className="text-sm font-black uppercase tracking-[0.3em] text-cyan-700">Start a project</p>
             <h2 className="font-display mt-4 text-5xl font-bold leading-none tracking-[-0.055em] sm:text-6xl">Tell me what you want to build.</h2>
             <p className="mt-6 text-lg font-medium leading-8 text-slate-600">Whether it is a landing page, booking system, management system, portfolio, or full-stack website, the build starts with your goal and required features.</p>
-            <a href="mailto:heyhey282928@gmail.com" className="mt-8 inline-flex items-center gap-2 rounded-full bg-[#05070d] px-6 py-4 text-sm font-black text-white hover:-translate-y-1 hover:bg-cyan-700">
-              Send Email <Mail size={17} />
+            <a href="mailto:heyhey282928@gmail.com" className="btn-dark mt-8 inline-flex items-center gap-2 rounded-full px-6 py-4 text-sm hover:-translate-y-1">
+              <span>Send Email</span> <Mail size={17} />
             </a>
           </div>
           <div className="bg-[#05070d] p-8 text-white lg:p-12">
@@ -358,16 +429,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      <footer className="border-t border-white/10 px-5 py-10 lg:px-8">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-4 text-sm font-semibold text-slate-500 md:flex-row md:items-center">
-          <p>© 2026 Jonathan Broqueza. Web developer and digital systems designer.</p>
-          <div className="flex gap-4">
-            <a href="#projects" className="hover:text-white">Projects</a>
-            <a href="/admin" className="hover:text-white">Admin</a>
-            <a href="#contact" className="hover:text-white">Contact</a>
-          </div>
-        </div>
-      </footer>
+      <MacDock />
     </main>
   );
 }
