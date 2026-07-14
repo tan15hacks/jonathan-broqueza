@@ -20,9 +20,9 @@
   pointer-events: none;
   opacity: 0;
   transition:
-    opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
-    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.45s ease;
+    opacity 0.34s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.4s ease;
 }
 
 .hero-portrait-wrap .portrait-hover-video,
@@ -40,49 +40,51 @@
 }
 
 .portrait-hover-video {
+  z-index: 4;
   object-fit: cover;
-  object-position: center;
-  background: #080604;
-  filter: brightness(0.68) contrast(1.2) saturate(0.82);
-  transform: scale(1.055);
+  object-position: center top;
+  background: transparent;
+  filter: brightness(0.86) contrast(1.12) saturate(0.9);
+  transform: scale(1.035);
   box-shadow:
-    inset 0 0 80px rgba(0, 0, 0, 0.84),
-    0 30px 80px rgba(0, 0, 0, 0.58),
-    0 0 48px rgba(255, 122, 26, 0.1);
+    0 30px 80px rgba(0, 0, 0, 0.52),
+    0 0 46px rgba(255, 122, 26, 0.1);
 }
 
 .portrait-video-shade {
   z-index: 5;
   background:
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent 32%, rgba(0, 0, 0, 0.58)),
-    radial-gradient(circle at 50% 42%, transparent 28%, rgba(0, 0, 0, 0.18) 55%, rgba(0, 0, 0, 0.76) 100%);
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.08), transparent 38%, rgba(0, 0, 0, 0.38)),
+    radial-gradient(circle at 50% 42%, transparent 38%, rgba(0, 0, 0, 0.08) 64%, rgba(0, 0, 0, 0.46) 100%);
   box-shadow:
-    inset 0 0 44px rgba(0, 0, 0, 0.72),
-    inset 0 -70px 80px rgba(0, 0, 0, 0.46);
-  transform: scale(1.035);
+    inset 0 0 34px rgba(0, 0, 0, 0.42),
+    inset 0 -50px 62px rgba(0, 0, 0, 0.28);
+  transform: scale(1.02);
 }
 
-.portrait-video-trigger.is-video-active .portrait-hover-video,
-.portrait-video-trigger.is-video-active .portrait-video-shade {
+/* Do not reveal the dark treatment until the browser has started playback. */
+.portrait-video-trigger.is-video-playing .portrait-hover-video,
+.portrait-video-trigger.is-video-playing .portrait-video-shade {
   opacity: 1;
   transform: scale(1);
 }
 
-.portrait-video-trigger.is-video-active .portrait-hover-video {
-  filter: brightness(0.73) contrast(1.22) saturate(0.86);
+.portrait-video-trigger.is-video-playing .portrait-hover-video {
+  filter: brightness(0.88) contrast(1.14) saturate(0.92);
 }
 
 .hero-portrait-wrap > img,
 .about-photo > img {
   transition:
-    filter 0.45s ease,
-    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 0.4s ease;
+    filter 0.4s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.34s ease;
 }
 
-.portrait-video-trigger.is-video-active > img {
-  filter: brightness(0.35) saturate(0.5);
-  transform: scale(0.985);
+.portrait-video-trigger.is-video-playing > img {
+  opacity: 0.12;
+  filter: brightness(0.55) saturate(0.65);
+  transform: scale(0.99);
 }
 
 .portrait-video-hint {
@@ -119,7 +121,16 @@
   animation: portrait-video-pulse 1.6s ease-in-out infinite;
 }
 
-.portrait-video-trigger.is-video-active .portrait-video-hint {
+.portrait-video-trigger.is-video-loading .portrait-video-hint span {
+  font-size: 0;
+}
+
+.portrait-video-trigger.is-video-loading .portrait-video-hint span::after {
+  content: "loading";
+  font-size: 0.58rem;
+}
+
+.portrait-video-trigger.is-video-playing .portrait-video-hint {
   opacity: 0;
   transform: translateY(6px);
 }
@@ -145,11 +156,11 @@
   aspect-ratio: 4 / 5;
 }
 
-.portrait-video-trigger.is-video-active::after {
+.portrait-video-trigger.is-video-playing::after {
   opacity: 1;
   box-shadow:
     inset 0 0 0 1px rgba(255, 122, 26, 0.16),
-    inset 0 0 60px rgba(0, 0, 0, 0.72),
+    inset 0 0 42px rgba(0, 0, 0, 0.38),
     0 0 52px rgba(255, 122, 26, 0.09);
 }
 
