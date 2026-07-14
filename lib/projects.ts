@@ -1,7 +1,10 @@
+export type ProjectCategory = "Web" | "Mobile";
+
 export type Project = {
   id: string;
   slug: string;
   order: number;
+  category: ProjectCategory;
   title: string;
   type: string;
   industry: string;
@@ -25,6 +28,7 @@ export const initialProjects: Project[] = [
     id: "nitroedge-garage",
     slug: "nitroedge-garage",
     order: 1,
+    category: "Web",
     title: "NitroEdge Garage",
     type: "Automotive Website",
     industry: "Automotive / Car Detailing",
@@ -43,6 +47,7 @@ export const initialProjects: Project[] = [
     id: "vowlens-studio",
     slug: "vowlens-studio",
     order: 2,
+    category: "Web",
     title: "VowLens Studio",
     type: "Photography Website",
     industry: "Wedding Photography / Events",
@@ -61,6 +66,7 @@ export const initialProjects: Project[] = [
     id: "noteview",
     slug: "noteview",
     order: 3,
+    category: "Web",
     title: "NoteView",
     type: "Editorial Platform",
     industry: "Publishing / Digital Journal",
@@ -79,6 +85,7 @@ export const initialProjects: Project[] = [
     id: "baryoconnect",
     slug: "baryoconnect",
     order: 4,
+    category: "Web",
     title: "BaryoConnect",
     type: "Community Management System",
     industry: "Local Government / Barangay",
@@ -96,6 +103,7 @@ export const initialProjects: Project[] = [
     id: "certibatch",
     slug: "certibatch",
     order: 5,
+    category: "Mobile",
     title: "CertiBatch",
     type: "Productivity Application",
     industry: "Education / Certificates",
@@ -104,7 +112,7 @@ export const initialProjects: Project[] = [
     overview: "CertiBatch turns a repeated manual task into a guided workflow for importing names, choosing a certificate design, and exporting ready-to-share PDF files.",
     role: "Product strategy, workflow design, offline-first architecture, and mobile application planning.",
     highlights: ["Bulk names", "PDF export", "Offline workflow", "Saved projects"],
-    tools: ["Flutter", "Local Storage", "PDF Generation"],
+    tools: ["Flutter", "Dart", "Local Storage", "PDF Generation"],
     status: "Concept",
     featured: false,
     published: true,
@@ -113,6 +121,7 @@ export const initialProjects: Project[] = [
     id: "tipid-grocery-list",
     slug: "tipid-grocery-list",
     order: 6,
+    category: "Mobile",
     title: "Tipid Grocery List",
     type: "Mobile Product Concept",
     industry: "Personal Finance / Grocery Planning",
@@ -121,7 +130,7 @@ export const initialProjects: Project[] = [
     overview: "The concept stores item prices over time, tracks spending, compares changes, and turns routine grocery lists into useful daily, weekly, and monthly insights.",
     role: "Product strategy, feature planning, monetization model, and offline-first UX direction.",
     highlights: ["Price history", "Expense reports", "Budgeting", "Suggestions"],
-    tools: ["Mobile Product Design", "Local Database", "Offline-first UX"],
+    tools: ["Flutter", "Dart", "Local Database", "Offline-first UX"],
     status: "Concept",
     featured: false,
     published: true,
