@@ -3,6 +3,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 import "./workshop-effects.css";
 import "./orange-theme.css";
+import "./profile-video.css";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -64,7 +65,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <script src="/profile-video.js" defer />
+      </body>
     </html>
   );
 }
