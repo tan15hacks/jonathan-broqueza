@@ -4,6 +4,7 @@ import "./globals.css";
 import "./workshop-effects.css";
 import "./orange-theme.css";
 import "./profile-video.css";
+import "./studio-ui.css";
 import NeonProjectBridge from "./NeonProjectBridge";
 
 const inter = Inter({
