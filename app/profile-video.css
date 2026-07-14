@@ -1,0 +1,190 @@
+.portrait-video-trigger {
+  cursor: pointer;
+  isolation: isolate;
+  outline: none;
+}
+
+.portrait-video-trigger:focus-visible {
+  box-shadow:
+    0 0 0 2px var(--bg),
+    0 0 0 4px var(--accent),
+    0 28px 90px rgba(0, 0, 0, 0.46);
+}
+
+.portrait-hover-video,
+.portrait-video-shade {
+  position: absolute;
+  z-index: 4;
+  display: block;
+  aspect-ratio: 4 / 5;
+  pointer-events: none;
+  opacity: 0;
+  transition:
+    opacity 0.42s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.45s ease;
+}
+
+.hero-portrait-wrap .portrait-hover-video,
+.hero-portrait-wrap .portrait-video-shade {
+  top: 0.75rem;
+  left: 0.75rem;
+  width: calc(100% - 1.5rem);
+}
+
+.about-photo .portrait-hover-video,
+.about-photo .portrait-video-shade {
+  top: 0.8rem;
+  left: 0.8rem;
+  width: calc(100% - 1.6rem);
+}
+
+.portrait-hover-video {
+  object-fit: cover;
+  object-position: center;
+  background: #080604;
+  filter: brightness(0.68) contrast(1.2) saturate(0.82);
+  transform: scale(1.055);
+  box-shadow:
+    inset 0 0 80px rgba(0, 0, 0, 0.84),
+    0 30px 80px rgba(0, 0, 0, 0.58),
+    0 0 48px rgba(255, 122, 26, 0.1);
+}
+
+.portrait-video-shade {
+  z-index: 5;
+  background:
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.2), transparent 32%, rgba(0, 0, 0, 0.58)),
+    radial-gradient(circle at 50% 42%, transparent 28%, rgba(0, 0, 0, 0.18) 55%, rgba(0, 0, 0, 0.76) 100%);
+  box-shadow:
+    inset 0 0 44px rgba(0, 0, 0, 0.72),
+    inset 0 -70px 80px rgba(0, 0, 0, 0.46);
+  transform: scale(1.035);
+}
+
+.portrait-video-trigger.is-video-active .portrait-hover-video,
+.portrait-video-trigger.is-video-active .portrait-video-shade {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.portrait-video-trigger.is-video-active .portrait-hover-video {
+  filter: brightness(0.73) contrast(1.22) saturate(0.86);
+}
+
+.hero-portrait-wrap > img,
+.about-photo > img {
+  transition:
+    filter 0.45s ease,
+    transform 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 0.4s ease;
+}
+
+.portrait-video-trigger.is-video-active > img {
+  filter: brightness(0.35) saturate(0.5);
+  transform: scale(0.985);
+}
+
+.portrait-video-hint {
+  position: absolute;
+  z-index: 8;
+  right: 1.15rem;
+  bottom: 3.55rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.48rem 0.62rem;
+  border: 1px solid rgba(255, 122, 26, 0.28);
+  background: rgba(8, 5, 3, 0.68);
+  color: rgba(255, 247, 237, 0.78);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  pointer-events: none;
+  backdrop-filter: blur(10px);
+  transition: opacity 0.25s ease, transform 0.3s ease;
+}
+
+.about-photo .portrait-video-hint {
+  bottom: 1.25rem;
+}
+
+.portrait-video-hint i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px rgba(255, 122, 26, 0.8);
+  animation: portrait-video-pulse 1.6s ease-in-out infinite;
+}
+
+.portrait-video-trigger.is-video-active .portrait-video-hint {
+  opacity: 0;
+  transform: translateY(6px);
+}
+
+.portrait-video-trigger::after {
+  content: "";
+  position: absolute;
+  z-index: 7;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+
+.hero-portrait-wrap.portrait-video-trigger::after {
+  inset: 0.75rem;
+  bottom: auto;
+  aspect-ratio: 4 / 5;
+}
+
+.about-photo.portrait-video-trigger::after {
+  inset: 0.8rem;
+  bottom: auto;
+  aspect-ratio: 4 / 5;
+}
+
+.portrait-video-trigger.is-video-active::after {
+  opacity: 1;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 122, 26, 0.16),
+    inset 0 0 60px rgba(0, 0, 0, 0.72),
+    0 0 52px rgba(255, 122, 26, 0.09);
+}
+
+@keyframes portrait-video-pulse {
+  0%, 100% {
+    opacity: 0.55;
+    transform: scale(0.82);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.16);
+  }
+}
+
+@media (max-width: 720px) {
+  .portrait-video-hint {
+    right: 1rem;
+    bottom: 3.35rem;
+  }
+
+  .about-photo .portrait-video-hint {
+    bottom: 1.15rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portrait-hover-video,
+  .portrait-video-shade,
+  .hero-portrait-wrap > img,
+  .about-photo > img,
+  .portrait-video-hint {
+    transition: opacity 0.01ms linear !important;
+  }
+
+  .portrait-video-hint i {
+    animation: none;
+  }
+}
