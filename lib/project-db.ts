@@ -118,8 +118,20 @@ export async function ensureProjectDatabase() {
       )
     `;
 
-    await sql`ALTER TABLE portfolio_projects ADD COLUMN IF NOT EXISTS category TEXT NOT NULL DEFAULT 'Web'`;
-    await sql`UPDATE portfolio_projects SET category = 'Mobile' WHERE id IN ('certibatch', 'tipid-grocery-list')`;
+    await sql`
+      DO $$
+      BEGIN
+        IF NOT EXISTS (
+          SELECT 1
+          FROM information_schema.columns
+          WHERE table_name = 'portfolio_projects' AND column_name = 'category'
+        ) THEN
+          ALTER TABLE portfolio_projects ADD COLUMN category TEXT NOT NULL DEFAULT 'Web';
+          UPDATE portfolio_projects SET category = 'Mobile' WHERE id IN ('certibatch', 'tipid-grocery-list');
+        END IF;
+      END
+      $$
+    `;
 
     const countRows = await sql`SELECT COUNT(*)::int AS count FROM portfolio_projects` as { count: number }[];
     if (Number(countRows[0]?.count || 0) === 0) {
