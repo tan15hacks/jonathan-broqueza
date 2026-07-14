@@ -31,6 +31,7 @@ const phoneNumber = "09456821503";
 const facebookUrl = "https://www.facebook.com/jonathan.broqueza.75/";
 const ease = [0.22, 1, 0.36, 1] as const;
 const sectionIds = ["start", "work", "services", "about", "contact"];
+const heroWords = ["web apps", "mobile apps", "websites", "UI/UX", "things"];
 
 const services = [
   {
@@ -184,6 +185,45 @@ function ProjectTile({
   );
 }
 
+function GlitchWord({ word }: { word: string }) {
+  return (
+    <motion.strong
+      key={word}
+      className="relative !inline-grid whitespace-nowrap font-[inherit] font-semibold text-[var(--accent)]"
+      initial={{ opacity: 0, y: 28, skewX: -8, filter: "blur(7px)" }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        skewX: 0,
+        filter: "blur(0px)",
+        x: [0, -3, 3, -1, 0],
+      }}
+      exit={{ opacity: 0, y: -24, skewX: 8, filter: "blur(6px)" }}
+      transition={{ duration: 0.46, ease }}
+    >
+      <motion.span
+        aria-hidden="true"
+        className="pointer-events-none !absolute !inset-0 !inline !text-cyan-300"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 0.65, 0, 0.4, 0], x: [-4, 3, -2, 0] }}
+        transition={{ duration: 0.34 }}
+      >
+        {word}
+      </motion.span>
+      <motion.span
+        aria-hidden="true"
+        className="pointer-events-none !absolute !inset-0 !inline !text-fuchsia-400"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: [0, 0.55, 0, 0.35, 0], x: [4, -3, 2, 0] }}
+        transition={{ duration: 0.34, delay: 0.03 }}
+      >
+        {word}
+      </motion.span>
+      <span className="relative !inline !text-[var(--accent)]">{word}</span>
+    </motion.strong>
+  );
+}
+
 export default function Home() {
   const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
@@ -191,6 +231,7 @@ export default function Home() {
   const [activeSection, setActiveSection] = useState("start");
   const [mobileMenu, setMobileMenu] = useState(false);
   const [showIntro, setShowIntro] = useState(false);
+  const [heroWordIndex, setHeroWordIndex] = useState(0);
 
   const pointerX = useMotionValue(0);
   const pointerY = useMotionValue(0);
@@ -221,6 +262,14 @@ export default function Home() {
       window.sessionStorage.setItem("jb_workshop_intro", "1");
       window.setTimeout(() => setShowIntro(false), 1250);
     }
+  }, []);
+
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      setHeroWordIndex((current) => (current + 1) % heroWords.length);
+    }, 1900);
+
+    return () => window.clearInterval(timer);
   }, []);
 
   useEffect(() => {
@@ -377,13 +426,19 @@ export default function Home() {
               <motion.p className="eyebrow" variants={{ hidden: { opacity: 0, x: -18 }, show: { opacity: 1, x: 0, transition: { duration: 0.55, ease } } }}>
                 Jonathan Broqueza / Web Developer
               </motion.p>
+
               <motion.h1 variants={{ hidden: { opacity: 0, y: 35 }, show: { opacity: 1, y: 0, transition: { duration: 0.8, ease } } }}>
-                I build useful
-                <span>digital things.</span>
+                <span className="!block !text-[var(--text)]">Hi, my name is <b className="font-[inherit] font-semibold text-[var(--accent)]">Jonathan</b></span>
+                <span className="!block !text-[var(--text)]">
+                  I design and build{" "}
+                  <span className="relative !inline-grid min-w-[5.8em] align-baseline">
+                    <AnimatePresence mode="wait">
+                      <GlitchWord key={heroWords[heroWordIndex]} word={heroWords[heroWordIndex]} />
+                    </AnimatePresence>
+                  </span>
+                </span>
               </motion.h1>
-              <motion.p className="hero-subcopy" variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0, transition: { duration: 0.65, ease } } }}>
-                Websites, systems, and ideas turned into working products.
-              </motion.p>
+
               <motion.div className="hero-actions" variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.6 } } }}>
                 <MagneticLink href="#work" className="primary-link">Explore my work <ArrowDown size={17} /></MagneticLink>
                 <span>Bicol, Philippines</span>
