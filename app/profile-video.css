@@ -22,19 +22,16 @@
 .about-photo > img {
   position: relative;
   z-index: 1;
-  transition:
-    transform 0.7s cubic-bezier(0.22, 1, 0.36, 1),
-    filter 0.45s ease;
-  will-change: transform, filter;
+  transition: filter 0.45s ease;
+  will-change: filter;
 }
 
 .hero-portrait-wrap:hover > img,
 .about-photo:hover > img {
-  transform: scale(1.045);
   filter: brightness(1.04) contrast(1.06) saturate(1.06);
 }
 
-/* Moving orange light sweep across the photo. */
+/* The light sweep stays fixed to the photo box and only moves its background. */
 .hero-portrait-wrap::after,
 .about-photo::after {
   content: "";
@@ -46,18 +43,20 @@
   aspect-ratio: 4 / 5;
   pointer-events: none;
   opacity: 0;
-  background: linear-gradient(
+  background-image: linear-gradient(
     105deg,
-    transparent 28%,
-    rgba(255, 255, 255, 0.03) 39%,
-    rgba(255, 174, 92, 0.24) 48%,
-    rgba(255, 255, 255, 0.1) 53%,
-    transparent 66%
+    transparent 36%,
+    rgba(255, 255, 255, 0.025) 43%,
+    rgba(255, 174, 92, 0.23) 49%,
+    rgba(255, 255, 255, 0.09) 53%,
+    transparent 61%
   );
+  background-repeat: no-repeat;
+  background-size: 260% 100%;
+  background-position: 135% center;
   mix-blend-mode: screen;
-  transform: translateX(-125%) skewX(-12deg);
   transition:
-    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    background-position 0.9s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.22s ease;
 }
 
@@ -70,7 +69,7 @@
 .hero-portrait-wrap:hover::after,
 .about-photo:hover::after {
   opacity: 1;
-  transform: translateX(125%) skewX(-12deg);
+  background-position: -35% center;
 }
 
 /* Keep labels and captions above the photo effect. */
@@ -88,11 +87,6 @@
   .hero-portrait-wrap::after,
   .about-photo::after {
     transition: none !important;
-  }
-
-  .hero-portrait-wrap:hover > img,
-  .about-photo:hover > img {
-    transform: none;
   }
 
   .hero-portrait-wrap::after,
