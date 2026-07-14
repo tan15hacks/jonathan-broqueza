@@ -1,0 +1,123 @@
+:root {
+  --bg: #0b0805;
+  --surface: #15100b;
+  --surface-2: #21160d;
+  --text: #fff7ed;
+  --muted: #a99b8f;
+  --accent: #ff7a1a;
+  --accent-soft: rgba(255, 122, 26, 0.16);
+}
+
+html {
+  background: var(--bg);
+}
+
+body {
+  background:
+    radial-gradient(circle at 12% 2%, rgba(255, 122, 26, 0.16), transparent 29%),
+    radial-gradient(circle at 92% 24%, rgba(153, 70, 16, 0.13), transparent 26%),
+    var(--bg);
+}
+
+.workshop-intro,
+footer {
+  background: #0b0805;
+}
+
+.nav-wrap {
+  background: rgba(11, 8, 5, 0.72);
+}
+
+.mobile-nav {
+  background: rgba(11, 8, 5, 0.96);
+}
+
+.hero-grid::after {
+  border-color: rgba(255, 122, 26, 0.15);
+  box-shadow:
+    0 0 0 90px rgba(255, 122, 26, 0.03),
+    0 0 0 180px rgba(255, 122, 26, 0.018);
+}
+
+.primary-link:hover,
+.skill-picker button:hover,
+.skill-picker button[data-active="true"] {
+  border-color: rgba(255, 122, 26, 0.58);
+}
+
+.hero-portrait-wrap::before {
+  border-color: rgba(255, 122, 26, 0.3);
+}
+
+.portrait-code,
+.about-photo > span,
+.project-modal-panel {
+  background: #110c08;
+}
+
+.floating-object {
+  background: rgba(20, 13, 8, 0.76);
+}
+
+.project-open-cue,
+.modal-close {
+  background: rgba(11, 8, 5, 0.8);
+}
+
+.project-fallback::after {
+  background: #8a3f12;
+}
+
+.contact-section {
+  background:
+    radial-gradient(circle at 70% 50%, rgba(255, 122, 26, 0.18), transparent 32%),
+    #0d0906;
+}
+
+.modal-fallback {
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255, 122, 26, 0.38), transparent 31%),
+    linear-gradient(145deg, #211207, #0d0906);
+}
+
+/* Orange glitch palette. The movement still comes from workshop-effects.css. */
+.hero-copy h1 strong {
+  text-shadow: 0 0 24px rgba(255, 122, 26, 0.28);
+}
+
+.hero-copy h1 strong::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    #ffffff 18%,
+    #ff7a1a 50%,
+    #ffd166 82%,
+    transparent
+  );
+  box-shadow: 0 0 14px rgba(255, 122, 26, 0.72);
+}
+
+.hero-copy h1 strong > span[aria-hidden="true"]:first-child {
+  color: #ffd166 !important;
+  text-shadow: -8px 0 #ffd166;
+}
+
+.hero-copy h1 strong > span[aria-hidden="true"]:nth-child(2) {
+  color: #ff3d00 !important;
+  text-shadow: 8px 0 #ff3d00;
+}
+
+.floating-object::after {
+  border-color: rgba(255, 122, 26, 0);
+}
+
+@keyframes workshop-glow {
+  0%, 100% {
+    border-color: rgba(255, 122, 26, 0);
+    box-shadow: 0 0 0 rgba(255, 122, 26, 0);
+  }
+  50% {
+    border-color: rgba(255, 122, 26, 0.28);
+    box-shadow: 0 0 36px rgba(255, 122, 26, 0.1);
+  }
+}
