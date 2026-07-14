@@ -14,7 +14,8 @@
     const video = document.createElement("video");
     video.className = "portrait-hover-video";
     video.src = "/profile-effect.mp4";
-    video.preload = "metadata";
+    video.poster = "/profile-photo.png";
+    video.preload = "auto";
     video.loop = true;
     video.muted = true;
     video.defaultMuted = true;
@@ -38,40 +39,63 @@
     container.append(video, shade, hint);
 
     let locked = false;
+    let requestId = 0;
 
-    const showVideo = (restart = false) => {
+    const resetPlayback = () => {
+      requestId += 1;
+      container.classList.remove("is-video-loading", "is-video-playing");
+      container.setAttribute("aria-pressed", "false");
+      video.pause();
+
+      try {
+        video.currentTime = 0;
+      } catch {
+        // Ignore seek errors while metadata is unavailable.
+      }
+    };
+
+    const revealWhenPlaying = async (restart = false) => {
+      const currentRequest = ++requestId;
+
       if (restart) {
         try {
           video.currentTime = 0;
         } catch {
-          // The video may not have metadata yet; play() will start it normally.
+          // Playback will begin normally when the file is ready.
         }
       }
 
       video.muted = true;
       video.defaultMuted = true;
       video.volume = 0;
-      container.classList.add("is-video-active");
-      container.setAttribute("aria-pressed", locked ? "true" : "false");
-      video.play().catch(() => {
-        // Browsers may briefly block playback before the user gesture completes.
-      });
+      container.classList.add("is-video-loading");
+
+      try {
+        await video.play();
+
+        if (currentRequest !== requestId) return;
+
+        container.classList.remove("is-video-loading");
+        container.classList.add("is-video-playing");
+        container.setAttribute("aria-pressed", locked ? "true" : "false");
+      } catch {
+        if (currentRequest !== requestId) return;
+        container.classList.remove("is-video-loading", "is-video-playing");
+      }
     };
 
     const hideVideo = () => {
       if (locked) return;
-      container.classList.remove("is-video-active");
-      container.setAttribute("aria-pressed", "false");
-      video.pause();
-      try {
-        video.currentTime = 0;
-      } catch {
-        // Ignore seek errors before metadata is loaded.
-      }
+      resetPlayback();
     };
 
+    video.addEventListener("error", () => {
+      locked = false;
+      resetPlayback();
+    });
+
     container.addEventListener("pointerenter", (event) => {
-      if (event.pointerType === "mouse") showVideo(true);
+      if (event.pointerType === "mouse") revealWhenPlaying(true);
     });
 
     container.addEventListener("pointerleave", (event) => {
@@ -80,18 +104,12 @@
 
     container.addEventListener("click", () => {
       locked = !locked;
-      container.setAttribute("aria-pressed", String(locked));
 
       if (locked) {
-        showVideo(true);
+        container.setAttribute("aria-pressed", "true");
+        revealWhenPlaying(true);
       } else {
-        container.classList.remove("is-video-active");
-        video.pause();
-        try {
-          video.currentTime = 0;
-        } catch {
-          // Ignore seek errors before metadata is loaded.
-        }
+        resetPlayback();
       }
     });
 
@@ -102,9 +120,17 @@
     });
 
     document.addEventListener("visibilitychange", () => {
-      if (document.hidden) video.pause();
-      else if (container.classList.contains("is-video-active")) video.play().catch(() => {});
+      if (document.hidden) {
+        video.pause();
+        return;
+      }
+
+      if (container.classList.contains("is-video-playing")) {
+        video.play().catch(() => resetPlayback());
+      }
     });
+
+    video.load();
   }
 
   function initialize() {
