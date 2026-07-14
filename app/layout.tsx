@@ -7,6 +7,7 @@ import "./profile-video.css";
 import "./studio-ui.css";
 import "./mobile-capability.css";
 import "./work-categories.css";
+import "./not-found.css";
 import NeonProjectBridge from "./NeonProjectBridge";
 import ContactSkillsEnhancer from "./ContactSkillsEnhancer";
 import CleanSectionNavigation from "./CleanSectionNavigation";
