@@ -4,7 +4,6 @@ import "./globals.css";
 import "./workshop-effects.css";
 import "./orange-theme.css";
 import "./profile-video.css";
-import PortraitVideoEnhancer from "./PortraitVideoEnhancer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -66,10 +65,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
-      <body>
-        {children}
-        <PortraitVideoEnhancer />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
