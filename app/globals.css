@@ -196,6 +196,52 @@ select:focus-visible {
   display: block;
 }
 
+#about > div > :nth-child(2) {
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 2rem;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.025)),
+    rgba(5, 7, 13, 0.72);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.24);
+  padding: 1.5rem;
+  backdrop-filter: blur(20px);
+}
+
+#about > div > :nth-child(2):hover {
+  border-color: rgba(34, 211, 238, 0.32);
+  box-shadow: 0 30px 100px rgba(34, 211, 238, 0.08), 0 24px 80px rgba(0, 0, 0, 0.28);
+}
+
+@media (min-width: 1024px) {
+  #about > div {
+    align-items: stretch !important;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr) !important;
+  }
+
+  #about > div > :first-child,
+  #about > div > :nth-child(2) {
+    height: 100%;
+  }
+
+  #about > div > :nth-child(2) {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    padding: 2rem;
+  }
+
+  #about > div > :nth-child(2) > div:nth-child(2) {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    grid-auto-rows: minmax(72px, 1fr);
+    align-content: stretch;
+  }
+
+  #about > div > :nth-child(2) > div:nth-child(2) > div {
+    display: flex;
+    align-items: center;
+    padding: 1.15rem 1.2rem;
+  }
+}
+
 .scrollbar-none {
   scrollbar-width: none;
 }
