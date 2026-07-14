@@ -17,11 +17,9 @@ import {
   ArrowUpRight,
   Database,
   ExternalLink,
-  Facebook,
   Mail,
   Menu,
   Monitor,
-  Phone,
   Smartphone,
   TabletSmartphone,
   X,
@@ -30,8 +28,6 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { initialProjects, type Project, type ProjectCategory } from "@/lib/projects";
 
 const contactEmail = "thanbroq896@gmail.com";
-const phoneNumber = "09456821503";
-const facebookUrl = "https://www.facebook.com/jonathan.broqueza.75/";
 const ease = [0.22, 1, 0.36, 1] as const;
 const sectionIds = ["start", "work", "services", "about", "contact"];
 const heroWords = ["web apps", "mobile apps", "websites", "UI/UX", "things"];
@@ -41,28 +37,28 @@ const services = [
   {
     number: "01",
     title: "Web experiences",
-    copy: "Landing pages, business sites, portfolios, and editorial websites.",
+    copy: "Responsive websites for businesses, portfolios, services, and creative brands. I focus on making them clean, easy to navigate, and comfortable to use on any screen.",
     icon: Monitor,
     command: "build --web",
   },
   {
     number: "02",
     title: "Digital systems",
-    copy: "Booking flows, management tools, records, and admin dashboards.",
+    copy: "Booking systems, management tools, record systems, and dashboards that help organize work and make everyday tasks easier.",
     icon: Database,
     command: "build --system",
   },
   {
     number: "03",
     title: "Product builds",
-    copy: "Responsive web apps with auth, databases, storage, and custom logic.",
+    copy: "Complete web applications with user accounts, databases, file storage, dashboards, and features designed around the project’s actual needs.",
     icon: Smartphone,
     command: "build --product",
   },
   {
     number: "04",
     title: "Mobile apps",
-    copy: "Cross-platform mobile applications built with Flutter and Dart.",
+    copy: "Cross-platform mobile applications built with Flutter and Dart for Android and other supported platforms.",
     icon: TabletSmartphone,
     command: "build --flutter",
   },
@@ -166,15 +162,7 @@ function ProjectMedia({ project, index, mobileCard = false }: { project: Project
   );
 }
 
-function ProjectTile({
-  project,
-  index,
-  onOpen,
-}: {
-  project: Project;
-  index: number;
-  onOpen: (project: Project) => void;
-}) {
+function ProjectTile({ project, index, onOpen }: { project: Project; index: number; onOpen: (project: Project) => void }) {
   const rotateX = useMotionValue(0);
   const rotateY = useMotionValue(0);
   const smoothRotateX = useSpring(rotateX, { stiffness: 170, damping: 20 });
@@ -216,15 +204,7 @@ function ProjectTile({
   );
 }
 
-function MobileCarouselCard({
-  project,
-  index,
-  onOpen,
-}: {
-  project: Project;
-  index: number;
-  onOpen: (project: Project) => void;
-}) {
+function MobileCarouselCard({ project, index, onOpen }: { project: Project; index: number; onOpen: (project: Project) => void }) {
   return (
     <motion.button
       type="button"
@@ -319,10 +299,12 @@ export default function Home() {
       },
       { threshold: [0.25, 0.45, 0.7] },
     );
+
     sectionIds.forEach((id) => {
       const element = document.getElementById(id);
       if (element) observer.observe(element);
     });
+
     return () => observer.disconnect();
   }, []);
 
@@ -425,12 +407,14 @@ export default function Home() {
 
           <div className="site-shell hero-layout">
             <motion.div className="hero-copy" initial="hidden" animate="show" variants={{ hidden: {}, show: { transition: { staggerChildren: 0.1, delayChildren: 0.18 } } }}>
-              <motion.p className="eyebrow" variants={{ hidden: { opacity: 0, x: -18 }, show: { opacity: 1, x: 0, transition: { duration: 0.55, ease } } }}>Jonathan Broqueza / Web & Mobile Developer</motion.p>
+              <motion.p className="eyebrow" variants={{ hidden: { opacity: 0, x: -18 }, show: { opacity: 1, x: 0, transition: { duration: 0.55, ease } } }}>Jonathan Broqueza / Full Stack Developer</motion.p>
               <motion.h1 variants={{ hidden: { opacity: 0, y: 35 }, show: { opacity: 1, y: 0, transition: { duration: 0.8, ease } } }}>
                 <span className="!block !text-[var(--text)]">Hi, my name is <b className="font-[inherit] font-semibold text-[var(--accent)]">Jonathan</b></span>
                 <span className="!block !text-[var(--text)]">I design and build{" "}<span className="relative !inline-grid min-w-[5.8em] align-baseline"><AnimatePresence mode="wait"><GlitchWord key={heroWords[heroWordIndex]} word={heroWords[heroWordIndex]} /></AnimatePresence></span></span>
               </motion.h1>
-              <motion.div className="hero-actions" variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.6 } } }}><MagneticLink href="#work" className="primary-link">Explore my work <ArrowDown size={17} /></MagneticLink><span>Bicol, Philippines</span></motion.div>
+              <motion.div className="hero-actions" variants={{ hidden: { opacity: 0 }, show: { opacity: 1, transition: { duration: 0.6 } } }}>
+                <MagneticLink href="#work" className="primary-link">Explore my work <ArrowDown size={17} /></MagneticLink>
+              </motion.div>
             </motion.div>
 
             <motion.div className="hero-portrait-wrap" initial={{ opacity: 0, clipPath: "inset(100% 0 0 0)" }} animate={{ opacity: 1, clipPath: "inset(0% 0 0 0)" }} transition={{ duration: 1, delay: 0.35, ease }}>
@@ -441,20 +425,19 @@ export default function Home() {
 
         <section id="work" className="section site-shell">
           <div className="section-heading work-heading">
-            <div><p className="eyebrow">01 / Selected work</p><h2>Projects I brought to life.</h2></div>
+            <div>
+              <p className="eyebrow">01 / Selected work</p>
+              <h2>Things I&apos;ve built.</h2>
+              <p className="mt-6 max-w-3xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
+                Here are some of the websites, systems, and applications I&apos;ve worked on. Each project started as an idea or problem that I wanted to turn into something real and usable.
+              </p>
+            </div>
             <p>Choose a category.</p>
           </div>
 
           <div className="work-category-bar" role="tablist" aria-label="Project categories">
             {workCategories.map((category) => (
-              <button
-                key={category}
-                type="button"
-                role="tab"
-                aria-selected={activeWorkCategory === category}
-                data-active={activeWorkCategory === category}
-                onClick={() => setActiveWorkCategory(category)}
-              >
+              <button key={category} type="button" role="tab" aria-selected={activeWorkCategory === category} data-active={activeWorkCategory === category} onClick={() => setActiveWorkCategory(category)}>
                 <span>{category}</span><small>{String(categoryCounts[category]).padStart(2, "0")}</small>
               </button>
             ))}
@@ -462,14 +445,7 @@ export default function Home() {
 
           <div className="desktop-work-view">
             <AnimatePresence mode="wait">
-              <motion.div
-                key={activeWorkCategory}
-                className={`project-canvas ${activeWorkCategory === "Mobile" ? "mobile-work-grid" : "web-work-grid"}`}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.38, ease }}
-              >
+              <motion.div key={activeWorkCategory} className={`project-canvas ${activeWorkCategory === "Mobile" ? "mobile-work-grid" : "web-work-grid"}`} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -12 }} transition={{ duration: 0.38, ease }}>
                 {workProjects.map((project, index) => <ProjectTile key={project.id} project={project} index={index} onOpen={setSelectedProject} />)}
               </motion.div>
             </AnimatePresence>
@@ -493,7 +469,9 @@ export default function Home() {
 
         <section id="services" className="section workshop-strip">
           <div className="site-shell">
-            <div className="section-heading compact"><div><p className="eyebrow">02 / What I build</p><h2>Different ideas. The right setup.</h2></div></div>
+            <div className="section-heading compact">
+              <div><p className="eyebrow">02 / What I build</p><h2>I build websites, systems, and apps.</h2></div>
+            </div>
             <div className="service-grid">
               {services.map((service, index) => {
                 const Icon = service.icon;
@@ -511,9 +489,14 @@ export default function Home() {
           <motion.div className="about-photo" initial={{ opacity: 0, rotate: -3, y: 40 }} whileInView={{ opacity: 1, rotate: -1.5, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8, ease }}><img src="/profile-photo.png" alt="Jonathan Broqueza in a blue suit" /><span>Jonathan.jpg</span></motion.div>
           <div className="about-copy">
             <p className="eyebrow">03 / About me</p>
-            <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease }}>A builder who likes useful ideas.</motion.h2>
-            <p>I&apos;m a BSCS graduate from Bicol University Polangui. I enjoy turning rough concepts into polished websites, digital systems, and mobile applications.</p>
-            <div className="profile-terminal"><div><span>role</span><strong>Web & Mobile Developer</strong></div><div><span>location</span><strong>Bicol, Philippines</strong></div><div><span>focus</span><strong>Websites / Systems / Mobile Apps</strong></div></div>
+            <motion.h2 initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7, ease }}>I like turning ideas into working products.</motion.h2>
+            <div className="mt-7 grid max-w-2xl gap-5 text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">
+              <p>Hi, I&apos;m Jonathan, a Computer Science graduate from Bicol University Polangui and a web and mobile developer based in Bicol, Philippines.</p>
+              <p>I&apos;ve always enjoyed coming up with ideas for websites, applications, systems, and games. What I like most about development is taking an idea that only exists in my head and slowly turning it into something people can actually see, use, and enjoy.</p>
+              <p>When I build a project, I try to keep everything clean, simple, and convenient. I don&apos;t want to add features just to make something look complicated. I prefer creating products that solve a real problem and feel easy to understand.</p>
+              <p>Right now, I mainly build websites, digital systems, and mobile applications using tools such as Next.js, React, Flutter, Firebase, and PostgreSQL. I&apos;m also continuing to explore game development and other technologies that help me bring more of my ideas to life.</p>
+            </div>
+            <div className="profile-terminal"><div><span>role</span><strong>Full Stack Developer</strong></div><div><span>location</span><strong>Bicol, Philippines</strong></div><div><span>focus</span><strong>Websites / Systems / Mobile Apps</strong></div></div>
           </div>
 
           <div className="toolkit-panel">
@@ -533,7 +516,16 @@ export default function Home() {
         </section>
 
         <section id="contact" className="contact-section">
-          <div className="site-shell contact-layout"><div><p className="eyebrow">04 / Contact</p><h2>Got an idea?<br /><span>Let&apos;s make it real.</span></h2></div><div className="contact-links"><MagneticLink href={`mailto:${contactEmail}`}><Mail size={18} /> Email me</MagneticLink><MagneticLink href={`tel:${phoneNumber}`}><Phone size={18} /> {phoneNumber}</MagneticLink><MagneticLink href={facebookUrl} external><Facebook size={18} /> Facebook</MagneticLink></div></div>
+          <div className="site-shell contact-layout">
+            <div>
+              <p className="eyebrow">04 / Contact</p>
+              <h2>Have a project in mind?</h2>
+              <p className="mt-7 max-w-2xl text-base leading-7 text-[var(--muted)] sm:text-lg sm:leading-8">Tell me what you&apos;re planning, and let&apos;s see how I can help turn it into a working website, system, or mobile application.</p>
+            </div>
+            <div className="contact-links">
+              <MagneticLink href={`mailto:${contactEmail}`}><Mail size={18} /> Email me</MagneticLink>
+            </div>
+          </div>
         </section>
 
         <footer><div className="site-shell footer-wrap"><span>© 2026 Jonathan Broqueza</span><span>Designed and built in Bicol.</span></div></footer>
