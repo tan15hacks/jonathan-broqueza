@@ -8,6 +8,17 @@ function stableProjects(projects: Project[]) {
   return JSON.stringify([...projects].sort((a, b) => a.order - b.order));
 }
 
+function contentHash(value: string) {
+  let hash = 2166136261;
+
+  for (let index = 0; index < value.length; index += 1) {
+    hash ^= value.charCodeAt(index);
+    hash = Math.imul(hash, 16777619);
+  }
+
+  return (hash >>> 0).toString(36);
+}
+
 export default function NeonProjectBridge() {
   const pathname = usePathname();
 
@@ -40,7 +51,7 @@ export default function NeonProjectBridge() {
         window.localStorage.setItem("jb_projects", nextValue);
 
         if (pathname === "/" && currentValue !== nextValue) {
-          const reloadKey = `jb_neon_reload:${nextValue.length}:${projects.map((project) => project.id).join("|")}`;
+          const reloadKey = `jb_neon_reload:${contentHash(nextValue)}`;
 
           if (window.sessionStorage.getItem("jb_neon_reload") !== reloadKey) {
             window.sessionStorage.setItem("jb_neon_reload", reloadKey);
