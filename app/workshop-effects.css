@@ -23,7 +23,7 @@
   animation-delay: 1.6s;
 }
 
-/* Keep the hero headline closer to the reference scale. */
+/* Keep the hero headline close to the reference scale. */
 .hero-copy h1 {
   max-width: 980px;
   font-size: clamp(2.7rem, 4.5vw, 4.3rem) !important;
@@ -43,49 +43,203 @@
   row-gap: 0.05em;
 }
 
+/*
+ * The word component remounts every time the text changes.
+ * This makes the complete VFX replay for every new word.
+ */
 .hero-copy h1 strong {
   position: relative;
+  isolation: isolate;
   display: inline-grid;
   line-height: inherit;
   will-change: transform, filter, opacity;
-  text-shadow: 0 0 24px rgba(155, 108, 255, 0.18);
+  text-shadow: 0 0 24px rgba(155, 108, 255, 0.22);
+  animation: hero-glitch-main 0.64s steps(1, end) both;
 }
 
-/* These two duplicate color layers remount for every new word. */
-.hero-copy h1 strong > span[aria-hidden="true"] {
+/* Fast horizontal scan bar so the switch is unmistakably a glitch. */
+.hero-copy h1 strong::after {
+  content: "";
+  position: absolute;
+  z-index: 5;
+  left: -0.08em;
+  right: -0.08em;
+  top: 12%;
+  height: 0.11em;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, #ffffff 18%, #9b6cff 52%, #67e8f9 82%, transparent);
+  opacity: 0;
   mix-blend-mode: screen;
-  animation: hero-glitch-slice 0.42s steps(2, end) both;
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+  animation: hero-glitch-scan 0.64s steps(1, end) both;
+}
+
+/* RGB duplicate layers. */
+.hero-copy h1 strong > span[aria-hidden="true"] {
+  z-index: 3;
+  opacity: 0;
+  mix-blend-mode: screen;
+  will-change: transform, clip-path, opacity;
 }
 
 .hero-copy h1 strong > span[aria-hidden="true"]:first-child {
-  clip-path: inset(8% 0 56% 0);
+  color: #67e8f9 !important;
+  text-shadow: -8px 0 #67e8f9;
+  animation: hero-glitch-cyan 0.64s steps(1, end) both !important;
 }
 
 .hero-copy h1 strong > span[aria-hidden="true"]:nth-child(2) {
-  clip-path: inset(58% 0 8% 0);
-  animation-delay: 0.035s;
+  color: #f472d0 !important;
+  text-shadow: 8px 0 #f472d0;
+  animation: hero-glitch-magenta 0.64s steps(1, end) both !important;
 }
 
-@keyframes hero-glitch-slice {
+@keyframes hero-glitch-main {
   0% {
-    clip-path: inset(0 0 100% 0);
-    text-shadow: -5px 0 #67e8f9;
+    opacity: 0;
+    transform: translate3d(0, 0.28em, 0) skewX(-7deg) scaleX(0.98);
+    filter: blur(6px) brightness(1.7);
   }
-  22% {
-    clip-path: inset(12% 0 52% 0);
-    text-shadow: 5px 0 #e879f9;
+  10% {
+    opacity: 1;
+    transform: translate3d(-10px, 0, 0) skewX(5deg) scaleX(1.04);
+    filter: blur(0) brightness(1.8) contrast(1.35);
   }
-  48% {
-    clip-path: inset(62% 0 10% 0);
-    text-shadow: -3px 0 #67e8f9;
+  19% {
+    transform: translate3d(8px, -2px, 0) skewX(-4deg) scaleX(0.97);
   }
-  72% {
-    clip-path: inset(34% 0 34% 0);
-    text-shadow: 3px 0 #e879f9;
+  28% {
+    transform: translate3d(-5px, 2px, 0) skewX(3deg) scaleX(1.03);
+    filter: brightness(2.15) contrast(1.5);
   }
+  38% {
+    transform: translate3d(6px, 0, 0) skewX(-2deg);
+  }
+  49% {
+    transform: translate3d(-3px, -1px, 0) skewX(1deg);
+    filter: brightness(1.45) contrast(1.2);
+  }
+  62% {
+    transform: translate3d(2px, 0, 0);
+  }
+  74%,
   100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) skewX(0) scaleX(1);
+    filter: blur(0) brightness(1) contrast(1);
+  }
+}
+
+@keyframes hero-glitch-cyan {
+  0%, 7% {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateX(0);
+  }
+  10% {
+    opacity: 0.95;
+    clip-path: inset(4% 0 62% 0);
+    transform: translateX(-11px);
+  }
+  19% {
+    opacity: 0.8;
+    clip-path: inset(52% 0 12% 0);
+    transform: translateX(9px);
+  }
+  28% {
+    opacity: 1;
+    clip-path: inset(24% 0 48% 0);
+    transform: translateX(-7px);
+  }
+  38% {
+    opacity: 0.75;
+    clip-path: inset(70% 0 4% 0);
+    transform: translateX(6px);
+  }
+  49% {
+    opacity: 0.55;
+    clip-path: inset(36% 0 34% 0);
+    transform: translateX(-4px);
+  }
+  62%, 100% {
+    opacity: 0;
     clip-path: inset(100% 0 0 0);
-    text-shadow: 0 0 transparent;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hero-glitch-magenta {
+  0%, 7% {
+    opacity: 0;
+    clip-path: inset(100% 0 0 0);
+    transform: translateX(0);
+  }
+  10% {
+    opacity: 0.9;
+    clip-path: inset(58% 0 7% 0);
+    transform: translateX(12px);
+  }
+  19% {
+    opacity: 0.82;
+    clip-path: inset(16% 0 56% 0);
+    transform: translateX(-9px);
+  }
+  28% {
+    opacity: 1;
+    clip-path: inset(42% 0 26% 0);
+    transform: translateX(8px);
+  }
+  38% {
+    opacity: 0.72;
+    clip-path: inset(8% 0 74% 0);
+    transform: translateX(-6px);
+  }
+  49% {
+    opacity: 0.5;
+    clip-path: inset(64% 0 14% 0);
+    transform: translateX(4px);
+  }
+  62%, 100% {
+    opacity: 0;
+    clip-path: inset(0 0 100% 0);
+    transform: translateX(0);
+  }
+}
+
+@keyframes hero-glitch-scan {
+  0%, 7% {
+    top: 8%;
+    opacity: 0;
+    transform: scaleX(0.4);
+  }
+  10% {
+    top: 16%;
+    opacity: 0.95;
+    transform: scaleX(1);
+  }
+  19% {
+    top: 68%;
+    opacity: 0.8;
+    transform: scaleX(0.78);
+  }
+  28% {
+    top: 38%;
+    opacity: 1;
+    transform: scaleX(1.08);
+  }
+  38% {
+    top: 82%;
+    opacity: 0.7;
+    transform: scaleX(0.62);
+  }
+  49% {
+    top: 52%;
+    opacity: 0.45;
+    transform: scaleX(0.88);
+  }
+  62%, 100% {
+    opacity: 0;
+    transform: scaleX(0);
   }
 }
 
@@ -118,7 +272,9 @@
 
 @media (prefers-reduced-motion: reduce) {
   .floating-object::after,
+  .hero-copy h1 strong,
+  .hero-copy h1 strong::after,
   .hero-copy h1 strong > span[aria-hidden="true"] {
-    animation: none;
+    animation: none !important;
   }
 }
