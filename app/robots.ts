@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: "/admin",
+      disallow: ["/admin", "/studio"],
     },
     sitemap: "https://jonathan-broqueza.vercel.app/sitemap.xml",
   };
