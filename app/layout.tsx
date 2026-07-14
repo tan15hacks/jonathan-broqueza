@@ -6,8 +6,8 @@ import "./orange-theme.css";
 import "./profile-video.css";
 import "./studio-ui.css";
 import "./mobile-capability.css";
+import "./work-categories.css";
 import NeonProjectBridge from "./NeonProjectBridge";
-import MobileCapabilityEnhancer from "./MobileCapabilityEnhancer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -75,7 +75,6 @@ export default function RootLayout({
       <body>
         {children}
         <NeonProjectBridge />
-        <MobileCapabilityEnhancer />
       </body>
     </html>
   );
