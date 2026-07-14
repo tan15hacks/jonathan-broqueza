@@ -8,6 +8,7 @@ import "./studio-ui.css";
 import "./mobile-capability.css";
 import "./work-categories.css";
 import NeonProjectBridge from "./NeonProjectBridge";
+import ContactSkillsEnhancer from "./ContactSkillsEnhancer";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -75,6 +76,7 @@ export default function RootLayout({
       <body>
         {children}
         <NeonProjectBridge />
+        <ContactSkillsEnhancer />
       </body>
     </html>
   );
