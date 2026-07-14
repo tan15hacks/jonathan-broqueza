@@ -1,0 +1,43 @@
+/* Mobile capability extension for the public portfolio. */
+.service-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.service-console h3 {
+  font-size: clamp(1.9rem, 2.65vw, 2.75rem);
+}
+
+.mobile-capability-card {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 122, 26, 0.12), transparent 34%),
+    linear-gradient(145deg, rgba(255, 255, 255, 0.035), rgba(255, 255, 255, 0.012));
+}
+
+.mobile-capability-card:hover {
+  background:
+    radial-gradient(circle at 82% 18%, rgba(255, 122, 26, 0.2), transparent 38%),
+    linear-gradient(145deg, rgba(255, 122, 26, 0.1), rgba(255, 255, 255, 0.015));
+}
+
+.mobile-skill-chip {
+  border-color: rgba(255, 122, 26, 0.28) !important;
+}
+
+.mobile-skill-chip:hover,
+.mobile-skill-chip:focus-visible {
+  border-color: rgba(255, 122, 26, 0.62) !important;
+  background: rgba(255, 122, 26, 0.12) !important;
+  color: #fff7ed !important;
+}
+
+@media (max-width: 1100px) {
+  .service-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .service-grid {
+    grid-template-columns: 1fr;
+  }
+}
