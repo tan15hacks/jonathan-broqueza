@@ -9,6 +9,7 @@ import "./mobile-capability.css";
 import "./work-categories.css";
 import NeonProjectBridge from "./NeonProjectBridge";
 import ContactSkillsEnhancer from "./ContactSkillsEnhancer";
+import CleanSectionNavigation from "./CleanSectionNavigation";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -23,6 +24,9 @@ const spaceGrotesk = Space_Grotesk({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://jonathan-broqueza.vercel.app"),
+  alternates: {
+    canonical: "/",
+  },
   title: "Jonathan Broqueza | Web & Mobile App Developer",
   description:
     "Jonathan Broqueza is a BSCS graduate from Bicol University Polangui who designs and builds responsive websites, web apps, Flutter mobile apps, booking systems, management systems, and full-stack digital products.",
@@ -77,6 +81,7 @@ export default function RootLayout({
         {children}
         <NeonProjectBridge />
         <ContactSkillsEnhancer />
+        <CleanSectionNavigation />
       </body>
     </html>
   );
