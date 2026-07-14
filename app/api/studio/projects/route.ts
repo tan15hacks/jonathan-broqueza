@@ -4,6 +4,7 @@ import { isStudioAuthenticated } from "@/lib/studio-auth";
 import { NextResponse } from "next/server";
 
 const allowedStatuses: Project["status"][] = ["Live", "Concept", "In Progress"];
+const allowedCategories: Project["category"][] = ["Web", "Mobile"];
 
 function projectFromBody(value: unknown): Project | null {
   if (!value || typeof value !== "object") return null;
@@ -16,7 +17,9 @@ function projectFromBody(value: unknown): Project | null {
     !body.type ||
     !body.description ||
     !body.status ||
-    !allowedStatuses.includes(body.status)
+    !body.category ||
+    !allowedStatuses.includes(body.status) ||
+    !allowedCategories.includes(body.category)
   ) {
     return null;
   }
@@ -25,6 +28,7 @@ function projectFromBody(value: unknown): Project | null {
     id: String(body.id),
     slug: String(body.slug),
     order: Number(body.order || 0),
+    category: body.category,
     title: String(body.title),
     type: String(body.type),
     industry: String(body.industry || ""),
@@ -66,7 +70,7 @@ export async function POST(request: Request) {
 
   const project = projectFromBody(await request.json());
   if (!project) {
-    return NextResponse.json({ error: "Complete the required project fields." }, { status: 400 });
+    return NextResponse.json({ error: "Complete the required project fields, including Web or Mobile category." }, { status: 400 });
   }
 
   try {
