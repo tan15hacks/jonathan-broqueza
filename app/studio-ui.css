@@ -1,0 +1,171 @@
+/* Studio-only UI overrides. These selectors are scoped to the private publisher. */
+
+main[class*="bg-[#08090b]"] > div[class*="max-w-7xl"] > div.grid > form {
+  border: 1px solid rgba(255, 122, 26, 0.2) !important;
+  border-radius: 24px;
+  background:
+    linear-gradient(180deg, rgba(255, 122, 26, 0.035), transparent 24%),
+    rgba(15, 12, 9, 0.92);
+  box-shadow: 0 28px 90px rgba(0, 0, 0, 0.3);
+}
+
+main[class*="bg-[#08090b]"] > div[class*="max-w-7xl"] > div.grid {
+  align-items: start;
+  grid-template-columns: minmax(0, 1.05fr) minmax(380px, 0.95fr);
+}
+
+main[class*="bg-[#08090b]"] > div[class*="max-w-7xl"] > div.grid > form label:has(> .contact-input),
+main.grid.min-h-screen.place-items-center form label:has(> .contact-input) {
+  display: block;
+  color: #fff7ed;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  line-height: 1.3;
+  text-transform: uppercase;
+}
+
+main[class*="bg-[#08090b]"] .contact-input,
+main.grid.min-h-screen.place-items-center .contact-input {
+  display: block !important;
+  width: 100% !important;
+  min-height: 48px;
+  margin-top: 0.55rem !important;
+  padding: 0.8rem 0.9rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  border-radius: 11px !important;
+  outline: none !important;
+  background: #17120e !important;
+  color: #fff7ed !important;
+  caret-color: #ff7a1a;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.025),
+    0 0 0 0 rgba(255, 122, 26, 0);
+  font-size: 0.92rem !important;
+  font-weight: 600;
+  line-height: 1.5;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+main[class*="bg-[#08090b]"] .contact-input:hover,
+main.grid.min-h-screen.place-items-center .contact-input:hover {
+  border-color: rgba(255, 122, 26, 0.38) !important;
+  background: #1b1510 !important;
+}
+
+main[class*="bg-[#08090b]"] .contact-input:focus,
+main.grid.min-h-screen.place-items-center .contact-input:focus {
+  border-color: #ff7a1a !important;
+  background: #1d160f !important;
+  box-shadow:
+    0 0 0 3px rgba(255, 122, 26, 0.12),
+    0 12px 34px rgba(0, 0, 0, 0.22) !important;
+}
+
+main[class*="bg-[#08090b]"] textarea.contact-input {
+  min-height: 108px;
+  resize: vertical !important;
+}
+
+main[class*="bg-[#08090b]"] textarea.contact-input[rows="5"] {
+  min-height: 154px;
+}
+
+main[class*="bg-[#08090b]"] select.contact-input {
+  cursor: pointer;
+  color-scheme: dark;
+}
+
+main[class*="bg-[#08090b]"] .contact-input::placeholder,
+main.grid.min-h-screen.place-items-center .contact-input::placeholder {
+  color: rgba(255, 247, 237, 0.34);
+}
+
+main[class*="bg-[#08090b]"] input[type="checkbox"] {
+  width: 17px;
+  height: 17px;
+  accent-color: #ff7a1a;
+}
+
+main[class*="bg-[#08090b]"] label:has(> input[type="checkbox"]) {
+  min-height: 46px;
+  padding: 0.7rem 0.8rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, 0.025);
+  color: #eee5dc;
+  font-size: 0.84rem;
+  font-weight: 700;
+}
+
+main[class*="bg-[#08090b]"] form > div.grid > div[class*="border-dashed"] {
+  border-color: rgba(255, 122, 26, 0.28) !important;
+  border-radius: 14px;
+  background: rgba(255, 122, 26, 0.035);
+}
+
+main[class*="bg-[#08090b]"] form button[type="submit"],
+main[class*="bg-[#08090b]"] form > button:last-child {
+  justify-content: center;
+  width: 100%;
+  min-height: 50px;
+  padding: 0.8rem 1rem;
+  border: 1px solid #ff7a1a !important;
+  border-radius: 12px;
+  background: #ff7a1a;
+  color: #130b05;
+  font-weight: 900;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+main[class*="bg-[#08090b]"] form button[type="submit"]:hover,
+main[class*="bg-[#08090b]"] form > button:last-child:hover {
+  transform: translateY(-2px);
+  background: #ff8d3b;
+  box-shadow: 0 14px 34px rgba(255, 122, 26, 0.2);
+}
+
+main[class*="bg-[#08090b]"] > div[class*="max-w-7xl"] > div.grid > section article {
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.022);
+  transition: border-color 0.2s ease, background-color 0.2s ease, transform 0.2s ease;
+}
+
+main[class*="bg-[#08090b]"] > div[class*="max-w-7xl"] > div.grid > section article:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 122, 26, 0.3) !important;
+  background: rgba(255, 122, 26, 0.035);
+}
+
+main[class*="bg-[#08090b]"] > div[class*="max-w-7xl"] > div.grid > section article button,
+main[class*="bg-[#08090b]"] > div[class*="max-w-7xl"] > div.grid > section article a {
+  border-radius: 9px;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+main[class*="bg-[#08090b]"] > div[class*="max-w-7xl"] > div.grid > section article button:hover,
+main[class*="bg-[#08090b]"] > div[class*="max-w-7xl"] > div.grid > section article a:hover {
+  border-color: rgba(255, 122, 26, 0.5) !important;
+  background: rgba(255, 122, 26, 0.1);
+  color: #ff9a51;
+}
+
+@media (max-width: 1279px) {
+  main[class*="bg-[#08090b]"] > div[class*="max-w-7xl"] > div.grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  main[class*="bg-[#08090b]"] > div[class*="max-w-7xl"] > div.grid > form {
+    border-radius: 18px;
+  }
+
+  main[class*="bg-[#08090b]"] .contact-input {
+    font-size: 16px !important;
+  }
+}
