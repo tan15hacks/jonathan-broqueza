@@ -5,6 +5,7 @@ type ProjectRow = {
   id: string;
   slug: string;
   display_order: number;
+  category: Project["category"];
   title: string;
   type: string;
   industry: string;
@@ -27,7 +28,6 @@ let setupPromise: Promise<void> | null = null;
 
 function stringList(value: unknown): string[] {
   if (Array.isArray(value)) return value.map(String).filter(Boolean);
-
   if (typeof value === "string") {
     try {
       const parsed = JSON.parse(value);
@@ -36,7 +36,6 @@ function stringList(value: unknown): string[] {
       return [];
     }
   }
-
   return [];
 }
 
@@ -45,6 +44,7 @@ function rowToProject(row: ProjectRow): Project {
     id: row.id,
     slug: row.slug,
     order: Number(row.display_order),
+    category: row.category === "Mobile" ? "Mobile" : "Web",
     title: row.title,
     type: row.type,
     industry: row.industry,
@@ -66,14 +66,13 @@ function rowToProject(row: ProjectRow): Project {
 
 async function insertProject(project: Project) {
   const sql = getSql();
-
   await sql`
     INSERT INTO portfolio_projects (
-      id, slug, display_order, title, type, industry, year,
+      id, slug, display_order, category, title, type, industry, year,
       description, overview, role, highlights, tools, live_url,
       media_url, media_type, media_name, status, featured, published
     ) VALUES (
-      ${project.id}, ${project.slug}, ${project.order}, ${project.title},
+      ${project.id}, ${project.slug}, ${project.order}, ${project.category}, ${project.title},
       ${project.type}, ${project.industry}, ${project.year},
       ${project.description}, ${project.overview}, ${project.role},
       ${JSON.stringify(project.highlights)}::jsonb,
@@ -97,6 +96,7 @@ export async function ensureProjectDatabase() {
         id TEXT PRIMARY KEY,
         slug TEXT UNIQUE NOT NULL,
         display_order INTEGER NOT NULL DEFAULT 0,
+        category TEXT NOT NULL DEFAULT 'Web' CHECK (category IN ('Web', 'Mobile')),
         title TEXT NOT NULL,
         type TEXT NOT NULL,
         industry TEXT NOT NULL DEFAULT '',
@@ -118,12 +118,12 @@ export async function ensureProjectDatabase() {
       )
     `;
 
-    const countRows = await sql`SELECT COUNT(*)::int AS count FROM portfolio_projects` as { count: number }[];
+    await sql`ALTER TABLE portfolio_projects ADD COLUMN IF NOT EXISTS category TEXT NOT NULL DEFAULT 'Web'`;
+    await sql`UPDATE portfolio_projects SET category = 'Mobile' WHERE id IN ('certibatch', 'tipid-grocery-list')`;
 
+    const countRows = await sql`SELECT COUNT(*)::int AS count FROM portfolio_projects` as { count: number }[];
     if (Number(countRows[0]?.count || 0) === 0) {
-      for (const project of initialProjects) {
-        await insertProject(project);
-      }
+      for (const project of initialProjects) await insertProject(project);
     }
   })().catch((error) => {
     setupPromise = null;
@@ -139,9 +139,8 @@ export async function getPublishedProjects() {
   const rows = await sql`
     SELECT * FROM portfolio_projects
     WHERE published = TRUE
-    ORDER BY display_order ASC, created_at ASC
+    ORDER BY category ASC, display_order ASC, created_at ASC
   ` as ProjectRow[];
-
   return rows.map(rowToProject);
 }
 
@@ -150,9 +149,8 @@ export async function getAllProjects() {
   const sql = getSql();
   const rows = await sql`
     SELECT * FROM portfolio_projects
-    ORDER BY display_order ASC, created_at ASC
+    ORDER BY category ASC, display_order ASC, created_at ASC
   ` as ProjectRow[];
-
   return rows.map(rowToProject);
 }
 
@@ -162,11 +160,11 @@ export async function saveProject(project: Project) {
 
   await sql`
     INSERT INTO portfolio_projects (
-      id, slug, display_order, title, type, industry, year,
+      id, slug, display_order, category, title, type, industry, year,
       description, overview, role, highlights, tools, live_url,
       media_url, media_type, media_name, status, featured, published
     ) VALUES (
-      ${project.id}, ${project.slug}, ${project.order}, ${project.title},
+      ${project.id}, ${project.slug}, ${project.order}, ${project.category}, ${project.title},
       ${project.type}, ${project.industry}, ${project.year},
       ${project.description}, ${project.overview}, ${project.role},
       ${JSON.stringify(project.highlights)}::jsonb,
@@ -178,6 +176,7 @@ export async function saveProject(project: Project) {
     ON CONFLICT (id) DO UPDATE SET
       slug = EXCLUDED.slug,
       display_order = EXCLUDED.display_order,
+      category = EXCLUDED.category,
       title = EXCLUDED.title,
       type = EXCLUDED.type,
       industry = EXCLUDED.industry,
